@@ -1,12 +1,9 @@
-*.iml
-.gradle
+
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
-.DS_Store
 /build
 /captures
-.externalNativeBuild
 
 
 # Created by https://www.gitignore.io/api/git,java,linux,macos,maven,gradle,kotlin,windows,android,intellij+all,androidstudio
