@@ -1,4 +1,4 @@
-package urbanclap.com.marketview.market;
+package urbanclap.com.marketview.frame_work.market;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>

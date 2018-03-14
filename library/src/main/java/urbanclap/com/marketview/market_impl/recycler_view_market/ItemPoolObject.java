@@ -1,8 +1,8 @@
-package urbanclap.com.marketview.recycler_view_market;
+package urbanclap.com.marketview.market_impl.recycler_view_market;
 
 import android.support.annotation.NonNull;
 
-import urbanclap.com.marketview.market.ItemData;
+import urbanclap.com.marketview.frame_work.market.ItemData;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -14,18 +14,18 @@ import urbanclap.com.marketview.market.ItemData;
 public class ItemPoolObject<T> {
 
     @NonNull
-    private String id;
+    private String sectionId;
     @NonNull
     private ItemData<T> itemData;
 
-    public ItemPoolObject(@NonNull String id, @NonNull ItemData<T> itemData) {
-        this.id = id;
+    public ItemPoolObject(@NonNull String sectionId, @NonNull ItemData<T> itemData) {
+        this.sectionId = sectionId;
         this.itemData = itemData;
     }
 
     @NonNull
-    public String getId() {
-        return id;
+    public String getSectionId() {
+        return sectionId;
     }
 
     @NonNull

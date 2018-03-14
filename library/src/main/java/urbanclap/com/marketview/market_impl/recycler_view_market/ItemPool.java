@@ -1,4 +1,4 @@
-package urbanclap.com.marketview.recycler_view_market;
+package urbanclap.com.marketview.market_impl.recycler_view_market;
 
 import android.support.annotation.NonNull;
 
@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import urbanclap.com.marketview.market.ItemData;
-import urbanclap.com.marketview.market.Section;
+import urbanclap.com.marketview.frame_work.market.ItemData;
+import urbanclap.com.marketview.frame_work.market.Section;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -55,7 +55,7 @@ public class ItemPool<T> {
     public void remove(@NonNull String id) {
         List<ItemPoolObject<T>> listToRemove = new ArrayList<>();
         for (ItemPoolObject<T> itemPoolObject : itemPoolObjectList) {
-            if (itemPoolObject.getId().equals(id))
+            if (itemPoolObject.getSectionId().equals(id))
                 listToRemove.add(itemPoolObject);
         }
         itemPoolObjectList.removeAll(listToRemove);
@@ -70,9 +70,14 @@ public class ItemPool<T> {
         return itemDataList;
     }
 
+    @NonNull
+    public List<ItemPoolObject<T>> getItemPoolObjectList() {
+        return itemPoolObjectList;
+    }
+
     private int containsFirst(String id) {
         for (int i = 0, len = itemPoolObjectList.size(); i < len; i++) {
-            if (itemPoolObjectList.get(i).getId().equals(id))
+            if (itemPoolObjectList.get(i).getSectionId().equals(id))
                 return i;
         }
         return -1;

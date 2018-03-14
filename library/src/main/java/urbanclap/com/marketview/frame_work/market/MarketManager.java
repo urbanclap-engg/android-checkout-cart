@@ -1,4 +1,4 @@
-package urbanclap.com.marketview.market;
+package urbanclap.com.marketview.frame_work.market;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -6,14 +6,15 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import urbanclap.com.marketview.cart.ICart;
-import urbanclap.com.marketview.market.interfaces.IStickyManager;
-import urbanclap.com.marketview.market.interfaces.IStickyView;
-import urbanclap.com.marketview.navigation_bar.INavigationBar;
-import urbanclap.com.marketview.navigation_bar.INavigationFactory;
-import urbanclap.com.marketview.navigation_bar.NavigationItemView;
-import urbanclap.com.marketview.navigation_bar.NavigationItemViewHolder;
-import urbanclap.com.marketview.navigation_bar.Routable;
+import urbanclap.com.marketview.frame_work.cart.ICart;
+import urbanclap.com.marketview.frame_work.market.interfaces.IStickyManager;
+import urbanclap.com.marketview.frame_work.market.interfaces.IStickyView;
+import urbanclap.com.marketview.frame_work.market.interfaces.MarketManagerBinder;
+import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
+import urbanclap.com.marketview.frame_work.navigation_bar.INavigationFactory;
+import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemView;
+import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemViewHolder;
+import urbanclap.com.marketview.frame_work.navigation_bar.Routable;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -21,21 +22,21 @@ import urbanclap.com.marketview.navigation_bar.Routable;
  * @since : 12 Mar 2018 6:50 PM
  */
 
-public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.OnNavigateCallback {
+public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.OnNavigateCallback, MarketManagerBinder {
 
     @NonNull
-    private List<Section<IT>> sections;
+    protected List<Section<IT>> sections;
 
     @Nullable
-    private INavigationBar navigationBar;
+    protected INavigationBar navigationBar;
     @Nullable
-    private INavigationFactory<NT> navigationFactory;
+    protected INavigationFactory<NT> navigationFactory;
     @Nullable
-    private IStickyView stickyView;
+    protected IStickyView stickyView;
     @Nullable
-    private IStickyManager stickyManager;
+    protected IStickyManager stickyManager;
     @Nullable
-    private ICart<CT> cart;
+    protected ICart<CT> cart;
 
     public MarketManager(@NonNull Config<IT, NT, CT> config) {
 
@@ -53,10 +54,9 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     }
 
     private void initManagement() {
+        showItems();
         initNavigationManagement();
         initStickyManager(stickyView, stickyManager);
-        showItems(sections);
-        manageCart(cart);
     }
 
     @NonNull
@@ -85,11 +85,9 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         }
     }
 
-    abstract void initStickyManager(@Nullable IStickyView stickyView, @Nullable IStickyManager stickyManager);
+    protected abstract void showItems();
 
-    abstract void showItems(@NonNull List<Section<IT>> sections);
-
-    abstract void manageCart(ICart<CT> cart);
+    protected abstract void initStickyManager(@Nullable IStickyView stickyView, @Nullable IStickyManager stickyManager);
 
     @Override
     public abstract void navigateTo(@NonNull String id);
