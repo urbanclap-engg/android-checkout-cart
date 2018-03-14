@@ -26,13 +26,13 @@ public class RecyclerStickyManager implements IStickyManager {
     @NonNull
     private List<View> stickyViews;
 
-    public RecyclerStickyManager(@NonNull List<Section<?>> sections, @NonNull ItemPool<?> itemPool) {
+    RecyclerStickyManager(@NonNull List<? extends Section<?>> sections, @NonNull ItemPool<?> itemPool) {
         viewMap = new SparseIntArray();
         stickyViews = new ArrayList<>();
         init(sections, itemPool);
     }
 
-    public void update(List<Section<?>> sections, @NonNull ItemPool<?> itemPool) {
+    public void update(List<? extends Section<?>> sections, @NonNull ItemPool<?> itemPool) {
         viewMap.clear();
         stickyViews.clear();
         init(sections, itemPool);
@@ -45,7 +45,7 @@ public class RecyclerStickyManager implements IStickyManager {
         return viewPos != -1 && viewPos < stickyViews.size() ? stickyViews.get(viewPos) : null;
     }
 
-    private void init(List<Section<?>> sections, ItemPool<?> itemPool) {
+    private void init(List<? extends Section<?>> sections, ItemPool<?> itemPool) {
         for (Section<?> section : sections) {
             if (section.getStickyView() == null)
                 continue;

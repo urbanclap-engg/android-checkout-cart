@@ -6,14 +6,12 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import urbanclap.com.marketview.R;
-import urbanclap.com.marketview.frame_work.market.interfaces.IMarketSectionView;
+import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
-import urbanclap.com.marketview.frame_work.market.interfaces.IStickyView;
-import urbanclap.com.marketview.frame_work.market.interfaces.MarketManagerBinder;
-import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -23,8 +21,6 @@ import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
 
 
 public class RecyclerMarketView extends LinearLayout implements IMarketView {
-    // TODO: 14/Mar/18 @adnaan: add support for ordering..
-
 
     @Nullable
     private View navigationBar;
@@ -33,9 +29,9 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
     @Nullable
     private View marketSectionView;
 
-    private static final int NAVIGATION_BAR_POSITION = 0;
-    private static final int STICKY_VIEW_POSITION = 1;
-    private static final int SECTION_VIEW_POSITION = 2;
+    private int navigationBarPos;
+    private int stickyViewPos;
+    private int marketSectionViewPos;
 
 
     public RecyclerMarketView(Context context) {
@@ -54,47 +50,85 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
     }
 
     void init() {
-        LayoutInflater.from(getContext()).inflate(R.layout.market_layout, this);
-    }
 
-    public void bindMarketManger(@NonNull MarketManagerBinder binder) {
-        binder.bindMarketManager(this);
+        navigationBar = null;
+        stickyView = null;
+        marketSectionView = null;
+
+        navigationBarPos = -1;
+        stickyViewPos = -1;
+        marketSectionViewPos = -1;
+
+        LayoutInflater.from(getContext()).inflate(R.layout.market_layout, this);
     }
 
     @Override
     public void addNavigationBar(@Nullable View navigationBar) {
 
-        if (!(navigationBar instanceof INavigationBar))
-            throw new IllegalArgumentException("navigationBar has to implement INavigationBar");
-
-        if (this.navigationBar != null)
-            removeViewAt(NAVIGATION_BAR_POSITION);
+        if (this.navigationBar != null && navigationBarPos >= 0)
+            removeViewAt(navigationBarPos);
         this.navigationBar = navigationBar;
-        addView(this.navigationBar, NAVIGATION_BAR_POSITION);
+        if (this.navigationBar == null) {
+            navigationBarPos = -1;
+            return;
+        }
+        navigationBarPos = 0;
+        addView(
+                this.navigationBar,
+                navigationBarPos,
+                new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+        );
+
     }
 
     @Override
     public void addStickyViewHolder(@Nullable View stickyView) {
 
-        if (!(stickyView instanceof IStickyView))
-            throw new IllegalArgumentException("stickyView has to implement IStickyView");
-
-        if (this.stickyView != null)
-            removeViewAt(STICKY_VIEW_POSITION);
+        if (this.stickyView != null && stickyViewPos >= 0)
+            removeViewAt(stickyViewPos);
         this.stickyView = stickyView;
-        addView(this.stickyView, STICKY_VIEW_POSITION);
+        if (this.stickyView == null) {
+            stickyViewPos = -1;
+            return;
+        }
+        stickyViewPos = navigationBarPos + 1;
+        addView(
+                this.stickyView,
+                stickyViewPos,
+                new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+        );
 
     }
 
     @Override
     public void addIMarketSectionView(@Nullable View marketSectionView) {
 
-        if (!(marketSectionView instanceof IMarketSectionView))
-            throw new IllegalArgumentException("marketSectionView has to implement IMarketSectionView");
-
-        if (this.marketSectionView != null)
-            removeViewAt(SECTION_VIEW_POSITION);
+        if (this.marketSectionView != null && marketSectionViewPos >= 0)
+            removeViewAt(marketSectionViewPos);
         this.marketSectionView = marketSectionView;
-        addView(this.marketSectionView, SECTION_VIEW_POSITION);
+        if (this.marketSectionView == null) {
+            marketSectionViewPos = -1;
+            return;
+        }
+        marketSectionViewPos = Math.max(navigationBarPos, stickyViewPos) + 1;
+        addView(
+                this.marketSectionView,
+                marketSectionViewPos,
+                new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                )
+        );
+    }
+
+    @Override
+    public void bindMarketManager(@NonNull MarketManager<?, ?, ?> marketManager) {
+        marketManager.bindMarketManager(this);
     }
 }

@@ -1,17 +1,18 @@
 package urbanclap.com.marketview.market_impl.recycler_view_market;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import urbanclap.com.marketview.frame_work.cart.CartCallback;
 import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.Section;
 import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
 import urbanclap.com.marketview.frame_work.market.interfaces.IStickyManager;
-import urbanclap.com.marketview.frame_work.market.interfaces.IStickyView;
 
 
 /**
@@ -23,8 +24,6 @@ import urbanclap.com.marketview.frame_work.market.interfaces.IStickyView;
 
 public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT> implements CartCallback<CT> {
 
-    // TODO: 13/Mar/18 @adnaan: add views..
-
     @NonNull
     private RecyclerView recyclerView;
     @NonNull
@@ -32,8 +31,12 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
     @NonNull
     private RecyclerViewAdapter<IT, CT> adapter;
 
-    @Nullable
-    private IMarketView marketView;
+
+    public RecyclerViewMarketManager(@NonNull Context context,
+                                     @NonNull Config<IT, NT, CT> config,
+                                     @NonNull RecyclerViewItemFactory<IT, CT> itemFactory) {
+        this(config, new RecyclerView(context), itemFactory);
+    }
 
     public RecyclerViewMarketManager(@NonNull Config<IT, NT, CT> config,
                                      @NonNull RecyclerView recyclerView,
@@ -41,11 +44,11 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
         super(config);
         this.recyclerView = recyclerView;
         this.itemPool = new ItemPool<>(sections);
-        adapter = new RecyclerViewAdapter<>(this.itemPool, itemFactory, this);
+        this.adapter = new RecyclerViewAdapter<>(this.itemPool, itemFactory, this);
     }
 
     @Override
-    protected void showItems() {
+    protected void initSectionsManager() {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(false);
@@ -53,10 +56,11 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
     }
 
     @Override
-    protected void initStickyManager(@Nullable final IStickyView stickyView, @Nullable final IStickyManager stickyManager) {
-        if (stickyView == null || stickyManager == null)
+    protected void initStickyManager() {
+        if (stickyView == null)
             return;
 
+        final IStickyManager stickyManager = new RecyclerStickyManager(sections, itemPool);
         RecyclerViewAdapter.ScrollCallback callback = new RecyclerViewAdapter.ScrollCallback() {
             @Override
             public void onScrollPosition(int pos) {
@@ -92,6 +96,15 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
     }
 
     @Override
+    public void bindMarketManager(@NonNull IMarketView marketView) {
+        View navigationBarView = navigationBar != null ? navigationBar.getView() : null;
+        View stickySectionView = stickyView != null ? stickyView.getView() : null;
+        marketView.addNavigationBar(navigationBarView);
+        marketView.addStickyViewHolder(stickySectionView);
+        marketView.addIMarketSectionView(recyclerView);
+    }
+
+    @Override
     public void incrementInCart(@NonNull String uuid, CT item) {
         if (cart != null)
             cart.increment(uuid, item);
@@ -105,10 +118,5 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
 
     public void setScrollCallbacks(@Nullable RecyclerViewScrollCallbacks scrollCallbacks) {
         adapter.setRecyclerViewScrollCallbacks(scrollCallbacks);
-    }
-
-    @Override
-    public void bindMarketManager(@NonNull IMarketView marketView) {
-        this.marketView = marketView;
     }
 }

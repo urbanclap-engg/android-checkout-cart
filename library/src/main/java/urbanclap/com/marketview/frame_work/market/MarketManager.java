@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import urbanclap.com.marketview.frame_work.cart.ICart;
-import urbanclap.com.marketview.frame_work.market.interfaces.IStickyManager;
+import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
 import urbanclap.com.marketview.frame_work.market.interfaces.IStickyView;
-import urbanclap.com.marketview.frame_work.market.interfaces.MarketManagerBinder;
 import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
 import urbanclap.com.marketview.frame_work.navigation_bar.INavigationFactory;
 import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemView;
@@ -22,7 +21,7 @@ import urbanclap.com.marketview.frame_work.navigation_bar.Routable;
  * @since : 12 Mar 2018 6:50 PM
  */
 
-public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.OnNavigateCallback, MarketManagerBinder {
+public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.OnNavigateCallback {
 
     @NonNull
     protected List<Section<IT>> sections;
@@ -33,8 +32,6 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     protected INavigationFactory<NT> navigationFactory;
     @Nullable
     protected IStickyView stickyView;
-    @Nullable
-    protected IStickyManager stickyManager;
     @Nullable
     protected ICart<CT> cart;
 
@@ -47,16 +44,14 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         this.navigationBar = config.navigationBar;
         this.navigationFactory = config.navigationFactory;
         this.stickyView = config.stickyView;
-        this.stickyManager = config.stickyManager;
         this.cart = config.cart;
-
         initManagement();
     }
 
     private void initManagement() {
-        showItems();
+        initSectionsManager();
         initNavigationManagement();
-        initStickyManager(stickyView, stickyManager);
+        initStickyManager();
     }
 
     @NonNull
@@ -85,9 +80,14 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         }
     }
 
-    protected abstract void showItems();
+    protected void addSections(@NonNull List<Section<IT>> sections) {
+        for (Section<IT> section : sections)
+            addSection(section);
+    }
 
-    protected abstract void initStickyManager(@Nullable IStickyView stickyView, @Nullable IStickyManager stickyManager);
+    protected abstract void initSectionsManager();
+
+    protected abstract void initStickyManager();
 
     @Override
     public abstract void navigateTo(@NonNull String id);
@@ -95,6 +95,8 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     public abstract void addSection(@NonNull Section<IT> section);
 
     public abstract boolean removeSection(@NonNull String sectionId);
+
+    public abstract void bindMarketManager(@NonNull IMarketView marketView);
 
 
     public static class Config<IT, NT, CT> {
@@ -108,10 +110,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         @Nullable
         private IStickyView stickyView;
         @Nullable
-        private IStickyManager stickyManager;
-        @Nullable
         private ICart<CT> cart;
-
 
         public Config() {
         }
@@ -123,13 +122,13 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         }
 
         public Config<IT, NT, CT> setSections(@NonNull List<Section<IT>> sections) {
-            this.sections = sections;
+            this.sections = new ArrayList<>();
+            this.sections.addAll(sections);
             return this;
         }
 
-        public Config<IT, NT, CT> setSticky(@Nullable IStickyView stickyView, @Nullable IStickyManager stickyManager) {
+        public Config<IT, NT, CT> setSticky(@Nullable IStickyView stickyView) {
             this.stickyView = stickyView;
-            this.stickyManager = stickyManager;
             return this;
         }
 

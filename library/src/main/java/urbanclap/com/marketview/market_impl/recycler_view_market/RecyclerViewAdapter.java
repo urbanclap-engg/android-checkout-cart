@@ -15,12 +15,12 @@ import urbanclap.com.marketview.frame_work.cart.CartCallback;
  */
 
 
-public class RecyclerViewAdapter<T, CT> extends RecyclerView.Adapter<RecyclerViewItemViewHolder<T, CT>> {
+class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerViewItemViewHolder<IT, CT>> {
 
     @NonNull
-    private ItemPool<T> itemPool;
+    private ItemPool<IT> itemPool;
     @NonNull
-    private RecyclerViewItemFactory<T, CT> itemFactory;
+    private RecyclerViewItemFactory<IT, CT> itemFactory;
     @NonNull
     private CartCallback<CT> cartCallback;
 
@@ -29,25 +29,16 @@ public class RecyclerViewAdapter<T, CT> extends RecyclerView.Adapter<RecyclerVie
     @Nullable
     private RecyclerViewScrollCallbacks recyclerViewScrollCallbacks;
 
-    RecyclerViewAdapter(@NonNull ItemPool<T> itemPool,
-                        @NonNull RecyclerViewItemFactory<T, CT> itemFactory,
+    RecyclerViewAdapter(@NonNull ItemPool<IT> itemPool,
+                        @NonNull RecyclerViewItemFactory<IT, CT> itemFactory,
                         @NonNull CartCallback<CT> cartCallback) {
         this.itemPool = itemPool;
         this.itemFactory = itemFactory;
         this.cartCallback = cartCallback;
     }
 
-    void setScrollCallback(@Nullable ScrollCallback scrollCallback) {
-        this.scrollCallback = scrollCallback;
-    }
-
-    public void setRecyclerViewScrollCallbacks(@Nullable RecyclerViewScrollCallbacks recyclerViewScrollCallbacks) {
-        this.recyclerViewScrollCallbacks = recyclerViewScrollCallbacks;
-    }
-
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        // TODO: 13/Mar/18 @adnaan: add callbacks and scroll behaviour ..
         super.onAttachedToRecyclerView(recyclerView);
         final LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -102,12 +93,12 @@ public class RecyclerViewAdapter<T, CT> extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public RecyclerViewItemViewHolder<T, CT> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewItemViewHolder<IT, CT> onCreateViewHolder(ViewGroup parent, int viewType) {
         return itemFactory.create(viewType, cartCallback);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewItemViewHolder<T, CT> holder, int position) {
+    public void onBindViewHolder(RecyclerViewItemViewHolder<IT, CT> holder, int position) {
         holder.onBindView(itemPool.getItemDataList().get(position).getViewModel());
     }
 
@@ -133,6 +124,13 @@ public class RecyclerViewAdapter<T, CT> extends RecyclerView.Adapter<RecyclerVie
         return itemPool.getItemDataList().get(position).getUUID();
     }
 
+    void setScrollCallback(@Nullable ScrollCallback scrollCallback) {
+        this.scrollCallback = scrollCallback;
+    }
+
+    void setRecyclerViewScrollCallbacks(@Nullable RecyclerViewScrollCallbacks recyclerViewScrollCallbacks) {
+        this.recyclerViewScrollCallbacks = recyclerViewScrollCallbacks;
+    }
 
     interface ScrollCallback {
         void onScrollPosition(int pos);

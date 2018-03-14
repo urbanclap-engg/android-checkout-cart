@@ -12,4 +12,6 @@ import android.view.View;
 
 public interface IStickyView {
     void setStickyView(@Nullable View view);
+
+    View getView();
 }
