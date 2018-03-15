@@ -8,12 +8,12 @@ import java.util.List;
 
 import urbanclap.com.marketview.frame_work.cart.ICart;
 import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
-import urbanclap.com.marketview.frame_work.market.interfaces.IStickyView;
 import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
 import urbanclap.com.marketview.frame_work.navigation_bar.INavigationFactory;
 import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemView;
 import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemViewHolder;
 import urbanclap.com.marketview.frame_work.navigation_bar.Routable;
+import urbanclap.com.marketview.frame_work.sticky.IStickyView;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -36,6 +36,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     protected ICart<CT> cart;
 
     public MarketManager(@NonNull Config<IT, NT, CT> config) {
+
 
         if (config.sections == null)
             throw new IllegalStateException("Sections cannot be null for the Market Manager initialisation");

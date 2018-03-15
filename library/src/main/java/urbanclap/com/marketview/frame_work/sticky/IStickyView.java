@@ -1,7 +1,8 @@
-package urbanclap.com.marketview.frame_work.market.interfaces;
+package urbanclap.com.marketview.frame_work.sticky;
 
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -13,5 +14,5 @@ import android.view.View;
 public interface IStickyView {
     void setStickyView(@Nullable View view);
 
-    View getView();
+    ViewGroup getView();
 }

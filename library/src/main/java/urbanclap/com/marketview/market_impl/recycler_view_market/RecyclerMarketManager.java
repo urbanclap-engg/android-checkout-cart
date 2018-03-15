@@ -12,7 +12,7 @@ import urbanclap.com.marketview.frame_work.cart.CartCallback;
 import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.Section;
 import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
-import urbanclap.com.marketview.frame_work.market.interfaces.IStickyManager;
+import urbanclap.com.marketview.frame_work.sticky.IStickyManager;
 
 
 /**
@@ -22,7 +22,7 @@ import urbanclap.com.marketview.frame_work.market.interfaces.IStickyManager;
  */
 
 
-public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT> implements CartCallback<CT> {
+public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT> implements CartCallback<CT> {
 
     @NonNull
     private RecyclerView recyclerView;
@@ -32,15 +32,19 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
     private RecyclerViewAdapter<IT, CT> adapter;
 
 
-    public RecyclerViewMarketManager(@NonNull Context context,
-                                     @NonNull Config<IT, NT, CT> config,
-                                     @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
-        this(config, new RecyclerView(context), itemFactory);
+    public RecyclerMarketManager(@NonNull Context context,
+                                 @NonNull Config<IT, NT, CT> config,
+                                 @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
+        this(
+                config,
+                RecyclerMarketManagerUtils.getDefaultRecycler(context),
+                itemFactory
+        );
     }
 
-    private RecyclerViewMarketManager(@NonNull Config<IT, NT, CT> config,
-                                      @NonNull RecyclerView recyclerView,
-                                      @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
+    private RecyclerMarketManager(@NonNull Config<IT, NT, CT> config,
+                                  @NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
         super(config);
         this.recyclerView = recyclerView;
         this.itemPool = new ItemPool<>(sections);
@@ -60,7 +64,7 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
         if (stickyView == null)
             return;
 
-        final IStickyManager stickyManager = new RecyclerStickyManager(sections, itemPool);
+        final IStickyManager stickyManager = new RecyclerStickyManager(stickyView, sections, itemPool);
         RecyclerViewAdapter.ScrollCallback callback = new RecyclerViewAdapter.ScrollCallback() {
             @Override
             public void onScrollPosition(int pos) {

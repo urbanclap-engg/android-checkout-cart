@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import urbanclap.com.marketview.frame_work.market.Section;
-import urbanclap.com.marketview.frame_work.market.interfaces.IStickyManager;
+import urbanclap.com.marketview.frame_work.sticky.IStickyManager;
+import urbanclap.com.marketview.frame_work.sticky.IStickyView;
 
 
 /**
@@ -22,11 +23,16 @@ import urbanclap.com.marketview.frame_work.market.interfaces.IStickyManager;
 public class RecyclerStickyManager implements IStickyManager {
 
     @NonNull
+    private IStickyView stickyView;
+    @NonNull
     private SparseIntArray viewMap;
     @NonNull
     private List<View> stickyViews;
 
-    RecyclerStickyManager(@NonNull List<? extends Section<?>> sections, @NonNull ItemPool<?> itemPool) {
+    RecyclerStickyManager(@NonNull IStickyView stickyView,
+                          @NonNull List<? extends Section<?>> sections,
+                          @NonNull ItemPool<?> itemPool) {
+        this.stickyView = stickyView;
         viewMap = new SparseIntArray();
         stickyViews = new ArrayList<>();
         init(sections, itemPool);
@@ -47,7 +53,7 @@ public class RecyclerStickyManager implements IStickyManager {
 
     private void init(List<? extends Section<?>> sections, ItemPool<?> itemPool) {
         for (Section<?> section : sections) {
-            if (section.getStickyView() == null)
+            if (section.getStickyViewItem() == null)
                 continue;
 
             String id = section.getId();
@@ -63,7 +69,7 @@ public class RecyclerStickyManager implements IStickyManager {
             }
 
             if (startIndex != -1 && endIndex != -1) {
-                stickyViews.add(section.getStickyView());
+                stickyViews.add(section.getStickyViewItem().createView(stickyView.getView()));
                 int pos = stickyViews.size() - 1;
                 for (int i = startIndex; i <= endIndex; i++) {
                     viewMap.append(i, pos);

@@ -1,4 +1,4 @@
-package urbanclap.com.marketview.frame_work.market.interfaces;
+package urbanclap.com.marketview.frame_work.sticky;
 
 import android.support.annotation.Nullable;
 import android.view.View;

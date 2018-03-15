@@ -2,9 +2,10 @@ package urbanclap.com.marketview.frame_work.market;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
 
 import java.util.List;
+
+import urbanclap.com.marketview.frame_work.sticky.IStickyViewItem;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -20,16 +21,18 @@ public class Section<T> {
     @NonNull
     private List<ItemData<T>> itemDataList;
     @Nullable
-    private View stickyView;
+    private IStickyViewItem stickyViewItem;
 
     public Section(@NonNull String id, @NonNull List<ItemData<T>> itemDataList) {
         this(id, itemDataList, null);
     }
 
-    public Section(@NonNull String id, @NonNull List<ItemData<T>> itemDataList, @Nullable View stickyView) {
+    public Section(@NonNull String id,
+                   @NonNull List<ItemData<T>> itemDataList,
+                   @Nullable IStickyViewItem stickyViewItem) {
         this.id = id;
         this.itemDataList = itemDataList;
-        this.stickyView = stickyView;
+        this.stickyViewItem = stickyViewItem;
     }
 
     @NonNull
@@ -43,7 +46,7 @@ public class Section<T> {
     }
 
     @Nullable
-    public View getStickyView() {
-        return stickyView;
+    public IStickyViewItem getStickyViewItem() {
+        return stickyViewItem;
     }
 }

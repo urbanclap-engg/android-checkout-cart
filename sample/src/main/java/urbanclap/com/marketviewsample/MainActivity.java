@@ -1,8 +1,12 @@
 package urbanclap.com.marketviewsample;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -17,8 +21,9 @@ import java.util.List;
 import urbanclap.com.marketview.frame_work.market.ItemData;
 import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.Section;
+import urbanclap.com.marketview.frame_work.sticky.IStickyViewItem;
+import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketManager;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketView;
-import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerViewMarketManager;
 import urbanclap.com.marketviewsample.market.CartItem;
 import urbanclap.com.marketviewsample.market.ItemFactory;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
@@ -66,14 +71,19 @@ public class MainActivity extends AppCompatActivity {
             itemDataList.add(new CartItem(sectionItem));
 
             addPokemonItemDataInList(pokemonItems, itemDataList);
-            sections.add(new Section<>(id, itemDataList));
+            sections.add(new Section<>(id, itemDataList, new IStickyViewItem() {
+                @Override
+                public View createView(@NonNull ViewGroup parent) {
+                    return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_layout, parent, false);
+                }
+            }));
         }
 
         MarketManager.Config<PokemonCartBaseItem, Void, Void> config = new MarketManager.Config<>();
         config.setSections(sections);
 
         MarketManager<PokemonCartBaseItem, Void, Void> marketManager =
-                new RecyclerViewMarketManager<>(this, config, new ItemFactory());
+                new RecyclerMarketManager<>(this, config, new ItemFactory());
 
         marketView.bindMarketManager(marketManager);
     }
