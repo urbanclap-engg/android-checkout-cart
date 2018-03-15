@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0, len = pokemonTypeArr.length(); i < len; i++) {
             JSONObject pokemonType = pokemonTypeArr.getJSONObject(i);
             String id = pokemonType.getString("uuid");
-            String type = pokemonType.getString("type");
+            final String type = pokemonType.getString("type");
             List<PokemonItem> pokemonItems = createPokemonItemListFromJson(pokemonType.getJSONArray("pokemons"));
 
             List<ItemData<PokemonCartBaseItem>> itemDataList = new ArrayList<>();
@@ -72,16 +73,25 @@ public class MainActivity extends AppCompatActivity {
             itemDataList.add(new CartItem(sectionItem));
 
             addPokemonItemDataInList(pokemonItems, itemDataList);
-            sections.add(new Section<>(id, itemDataList, new IStickyViewItem() {
-                @Override
-                public View createView(@NonNull ViewGroup parent) {
-                    return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_layout, parent, false);
-                }
-            }));
+            Section<PokemonCartBaseItem> section;
+            if (type.equalsIgnoreCase("water"))
+                section = new Section<>(id, itemDataList);
+            else
+                section = new Section<>(id, itemDataList, new IStickyViewItem() {
+                    @Override
+                    public View createView(@NonNull ViewGroup parent) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_layout, parent, false);
+                        TextView textView = view.findViewById(R.id.tv_itemSection_title);
+                        textView.setText(type);
+                        return view;
+                    }
+                });
+            sections.add(section);
         }
 
         MarketManager.Config<PokemonCartBaseItem, String, Void> config = new MarketManager.Config<>();
         config.setSections(sections)
+                .setSticky(RecyclerMarketManagerUtils.getDefaultStickyView(this))
                 .setNavigator(
                         RecyclerMarketManagerUtils.getDefaultHorizontalNavigationBar(this),
                         new NavigationItemFactory()

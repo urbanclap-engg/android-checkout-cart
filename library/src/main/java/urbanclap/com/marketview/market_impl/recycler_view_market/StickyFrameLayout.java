@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -29,14 +28,18 @@ public class StickyFrameLayout extends FrameLayout implements IStickyView {
     private void init() {
         ViewGroup.LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
-        setBackgroundColor(Color.parseColor("#757575"));
+        setBackgroundColor(Color.parseColor("#F0f0f0"));
     }
 
     @Override
     public void setStickyView(@Nullable View view) {
         removeAllViews();
-        addView(view);
-        invalidate();
+        if (view != null)
+            addView(view,
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT)
+            );
     }
 
     @Override
