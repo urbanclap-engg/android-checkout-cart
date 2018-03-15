@@ -15,12 +15,12 @@ import urbanclap.com.marketview.frame_work.cart.CartCallback;
  */
 
 
-class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerViewItemViewHolder<IT, CT>> {
+class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewHolder<IT, CT>> {
 
     @NonNull
     private ItemPool<IT> itemPool;
     @NonNull
-    private RecyclerViewItemFactory<IT, CT> itemFactory;
+    private RecyclerItemFactory<IT, CT> itemFactory;
     @NonNull
     private CartCallback<CT> cartCallback;
 
@@ -30,7 +30,7 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerViewItemV
     private RecyclerViewScrollCallbacks recyclerViewScrollCallbacks;
 
     RecyclerViewAdapter(@NonNull ItemPool<IT> itemPool,
-                        @NonNull RecyclerViewItemFactory<IT, CT> itemFactory,
+                        @NonNull RecyclerItemFactory<IT, CT> itemFactory,
                         @NonNull CartCallback<CT> cartCallback) {
         this.itemPool = itemPool;
         this.itemFactory = itemFactory;
@@ -93,12 +93,12 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerViewItemV
     }
 
     @Override
-    public RecyclerViewItemViewHolder<IT, CT> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerItemViewHolder<IT, CT> onCreateViewHolder(ViewGroup parent, int viewType) {
         return itemFactory.create(parent.getContext(), parent, viewType, cartCallback);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewItemViewHolder<IT, CT> holder, int position) {
+    public void onBindViewHolder(RecyclerItemViewHolder<IT, CT> holder, int position) {
         holder.onBindView(itemPool.getItemDataList().get(position).getViewModel());
     }
 

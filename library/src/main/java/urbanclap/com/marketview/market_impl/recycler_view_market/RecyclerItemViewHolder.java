@@ -16,13 +16,13 @@ import urbanclap.com.marketview.frame_work.market.interfaces.IItemViewHolder;
  */
 
 
-public abstract class RecyclerViewItemViewHolder<T, CT> extends RecyclerView.ViewHolder
+public abstract class RecyclerItemViewHolder<T, CT> extends RecyclerView.ViewHolder
         implements IItemViewHolder<T> {
 
     @Nullable
     private CartCallback<CT> cartCallback;
 
-    public RecyclerViewItemViewHolder(View itemView) {
+    public RecyclerItemViewHolder(View itemView) {
         super(itemView);
     }
 

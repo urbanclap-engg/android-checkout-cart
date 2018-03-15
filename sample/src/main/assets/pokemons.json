@@ -1,0 +1,202 @@
+{
+  "pokemons_types": [
+    {
+      "uuid": "grass",
+      "type": "Grass",
+      "pokemons": [
+        {
+          "uuid": 1,
+          "name": "Bulbasaur",
+          "description": "Grass and Poison"
+        },
+        {
+          "uuid": 2,
+          "name": "Ivysaur",
+          "description": "Grass and Poison"
+        },
+        {
+          "uuid": 3,
+          "name": "Venusaur",
+          "description": "Grass and Poison"
+        },
+        {
+          "uuid": 102,
+          "name": "Exeggcute",
+          "description": "Grass and Psychic"
+        },
+        {
+          "uuid": 103,
+          "name": "Exeggutor",
+          "description": "Grass and Psychic"
+        },
+        {
+          "uuid": 187,
+          "name": "Hoppip",
+          "description": "Grass and Flying"
+        },
+        {
+          "uuid": 188,
+          "name": "Skiploom",
+          "description": "Grass and Flying"
+        },
+        {
+          "uuid": 189,
+          "name": "Jumpluff",
+          "description": "Grass and Flying"
+        },
+        {
+          "uuid": 257,
+          "name": "Mega Sceptile",
+          "description": "Grass and Dragon"
+        },
+        {
+          "uuid": 459,
+          "name": "Snover",
+          "description": "Grass and Ice"
+        },
+        {
+          "uuid": 460,
+          "name": "Abomasnow",
+          "description": "Grass and Ice"
+        },
+        {
+          "uuid": 461,
+          "name": "Mega Abomasnow",
+          "description": "Grass and Ice"
+        }
+      ]
+    },
+    {
+      "uuid": "water",
+      "type": "Water",
+      "pokemons": [
+        {
+          "uuid": 7,
+          "name": "Squirtle",
+          "description": "Pure water"
+        },
+        {
+          "uuid": 8,
+          "name": "Wartotle",
+          "description": "Pure water"
+        },
+        {
+          "uuid": 9,
+          "name": "Blastoise",
+          "description": "Pure water"
+        },
+        {
+          "uuid": 54,
+          "name": "Psyduck",
+          "description": "Pure water"
+        },
+        {
+          "uuid": 55,
+          "name": "Golduck",
+          "description": "Pure water"
+        },
+        {
+          "uuid": 72,
+          "name": "Tentacool",
+          "description": "Water and Poison"
+        },
+        {
+          "uuid": 73,
+          "name": "Tentacruel",
+          "description": "Water and Poison"
+        },
+        {
+          "uuid": 79,
+          "name": "Slowpoke",
+          "description": "Water and Psychic"
+        },
+        {
+          "uuid": 80,
+          "name": "Slowbro",
+          "description": "Water and Psychic"
+        },
+        {
+          "uuid": 87,
+          "name": "Dewgong",
+          "description": "Water and ice"
+        },
+        {
+          "uuid": 91,
+          "name": "Cloyster",
+          "description": "Water and ice"
+        },
+        {
+          "uuid": 183,
+          "name": "Marill",
+          "description": "Water and Fairy"
+        }
+      ]
+    },
+    {
+      "uuid": "fire",
+      "type": "Fire",
+      "pokemons": [
+        {
+          "uuid": 4,
+          "name": "Charmander",
+          "description": "Pure fire"
+        },
+        {
+          "uuid": 5,
+          "name": "Charmeleon",
+          "description": "Pure Fire"
+        },
+        {
+          "uuid": 6,
+          "name": "Charizard",
+          "description": "Fire and dragon"
+        },
+        {
+          "uuid": 37,
+          "name": "Vulpix",
+          "description": "Pure Fire"
+        },
+        {
+          "uuid": 38,
+          "name": "Ninetales",
+          "description": "Pure Fire"
+        },
+        {
+          "uuid": 146,
+          "name": "Moltres",
+          "description": "Fire and Flying"
+        },
+        {
+          "uuid": 250,
+          "name": "Ho-Oh",
+          "description": "Fire and flying"
+        },
+        {
+          "uuid": 256,
+          "name": "Combusken",
+          "description": "Fire and fighting"
+        },
+        {
+          "uuid": 357,
+          "name": "Blaziken",
+          "description": "Fire and fighting"
+        },
+        {
+          "uuid": 322,
+          "name": "Numel",
+          "description": "Fire and ground"
+        },
+        {
+          "uuid": 323,
+          "name": "Camerupt",
+          "description": "Fire and ground"
+        },
+        {
+          "uuid": 485,
+          "name": "Heatran",
+          "description": "Fire and steel"
+        }
+      ]
+    }
+  ]
+}

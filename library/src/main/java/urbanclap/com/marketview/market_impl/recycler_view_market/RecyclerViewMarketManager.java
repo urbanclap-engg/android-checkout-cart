@@ -34,13 +34,13 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
 
     public RecyclerViewMarketManager(@NonNull Context context,
                                      @NonNull Config<IT, NT, CT> config,
-                                     @NonNull RecyclerViewItemFactory<IT, CT> itemFactory) {
+                                     @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
         this(config, new RecyclerView(context), itemFactory);
     }
 
     private RecyclerViewMarketManager(@NonNull Config<IT, NT, CT> config,
                                       @NonNull RecyclerView recyclerView,
-                                      @NonNull RecyclerViewItemFactory<IT, CT> itemFactory) {
+                                      @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
         super(config);
         this.recyclerView = recyclerView;
         this.itemPool = new ItemPool<>(sections);
