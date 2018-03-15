@@ -1,5 +1,8 @@
 package urbanclap.com.marketview.frame_work.navigation_bar;
 
+import android.support.annotation.NonNull;
+import android.view.ViewGroup;
+
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
  * @version : 1.0.0
@@ -8,5 +11,5 @@ package urbanclap.com.marketview.frame_work.navigation_bar;
 
 
 public interface INavigationFactory<T> {
-    NavigationItemViewHolder<T> createViewHolder(int viewType);
+    NavigationItemViewHolder<T> createViewHolder(int viewType, @NonNull ViewGroup parent);
 }

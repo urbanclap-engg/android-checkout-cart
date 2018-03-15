@@ -1,7 +1,7 @@
 package urbanclap.com.marketview.frame_work.navigation_bar;
 
 import android.support.annotation.NonNull;
-import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -19,5 +19,5 @@ public interface INavigationBar {
 
     void removeView(int pos);
 
-    View getView();
+    ViewGroup getView();
 }

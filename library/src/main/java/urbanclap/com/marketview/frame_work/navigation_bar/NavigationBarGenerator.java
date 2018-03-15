@@ -31,19 +31,19 @@ public class NavigationBarGenerator<T> {
     }
 
     public void addView(@NonNull Routable<T> routable) {
-        NavigationItemViewHolder<T> viewHolder = navigationFactory.createViewHolder(routable.getRouteViewType());
+        NavigationItemViewHolder<T> viewHolder = navigationFactory.createViewHolder(routable.getRouteViewType(), navigationBar.getView());
         viewHolder.onBind(routable.getRouteViewModel());
         navigationBar.addView(viewHolder.getNavigationItemView());
     }
 
     public void addView(@NonNull Routable<T> routable, int pos) {
-        NavigationItemViewHolder<T> viewHolder = navigationFactory.createViewHolder(routable.getRouteViewType());
+        NavigationItemViewHolder<T> viewHolder = navigationFactory.createViewHolder(routable.getRouteViewType(), navigationBar.getView());
         viewHolder.onBind(routable.getRouteViewModel());
         navigationBar.addView(viewHolder.getNavigationItemView(), pos);
     }
 
     public void updateView(@NonNull Routable<T> routable, int pos) {
-        NavigationItemViewHolder<T> viewHolder = navigationFactory.createViewHolder(routable.getRouteViewType());
+        NavigationItemViewHolder<T> viewHolder = navigationFactory.createViewHolder(routable.getRouteViewType(), navigationBar.getView());
         viewHolder.onBind(routable.getRouteViewModel());
         navigationBar.updateView(viewHolder.getNavigationItemView(), pos);
     }

@@ -23,9 +23,11 @@ import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.Section;
 import urbanclap.com.marketview.frame_work.sticky.IStickyViewItem;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketManager;
+import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketManagerUtils;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketView;
 import urbanclap.com.marketviewsample.market.CartItem;
 import urbanclap.com.marketviewsample.market.ItemFactory;
+import urbanclap.com.marketviewsample.market.NavigationItemFactory;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonSectionItem;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     private void init() throws JSONException {
@@ -79,10 +80,14 @@ public class MainActivity extends AppCompatActivity {
             }));
         }
 
-        MarketManager.Config<PokemonCartBaseItem, Void, Void> config = new MarketManager.Config<>();
+        MarketManager.Config<PokemonCartBaseItem, String, Void> config = new MarketManager.Config<>();
         config.setSections(sections);
+//        config.setNavigator(
+//                RecyclerMarketManagerUtils.getDefaultHorizontalNavigationBar(this),
+//                new NavigationItemFactory()
+//        );
 
-        MarketManager<PokemonCartBaseItem, Void, Void> marketManager =
+        MarketManager<PokemonCartBaseItem, String, Void> marketManager =
                 new RecyclerMarketManager<>(this, config, new ItemFactory());
 
         marketView.bindMarketManager(marketManager);

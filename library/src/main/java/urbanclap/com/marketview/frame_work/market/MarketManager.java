@@ -74,7 +74,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         List<Routable<NT>> routables = getRoutableItemList();
         for (Routable<NT> routable : routables) {
             NavigationItemViewHolder<NT> navigationItemViewHolder =
-                    navigationFactory.createViewHolder(routable.getRouteViewType());
+                    navigationFactory.createViewHolder(routable.getRouteViewType(), navigationBar.getView());
             navigationItemViewHolder.bind(routable, this, routable.getRouteUUID());
             navigationBar.addView(navigationItemViewHolder.getNavigationItemView());
         }

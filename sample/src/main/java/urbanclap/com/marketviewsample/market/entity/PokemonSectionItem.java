@@ -1,5 +1,7 @@
 package urbanclap.com.marketviewsample.market.entity;
 
+import urbanclap.com.marketview.frame_work.navigation_bar.Routable;
+
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
  * @version : 1.0.0
@@ -7,7 +9,7 @@ package urbanclap.com.marketviewsample.market.entity;
  */
 
 
-public class PokemonSectionItem implements PokemonCartBaseItem {
+public class PokemonSectionItem implements PokemonCartBaseItem, Routable<String> {
 
     private String title;
 
@@ -27,5 +29,20 @@ public class PokemonSectionItem implements PokemonCartBaseItem {
 
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public String getRouteViewModel() {
+        return title;
+    }
+
+    @Override
+    public String getRouteUUID() {
+        return title.toLowerCase();
+    }
+
+    @Override
+    public int getRouteViewType() {
+        return 0;
     }
 }

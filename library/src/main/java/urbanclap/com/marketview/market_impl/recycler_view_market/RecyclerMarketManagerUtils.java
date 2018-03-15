@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
+import urbanclap.com.marketview.NavigationHorizontalScroll;
+import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
 import urbanclap.com.marketview.frame_work.sticky.IStickyView;
 
 /**
@@ -21,5 +23,9 @@ public class RecyclerMarketManagerUtils {
 
     public static RecyclerView getDefaultRecycler(@NonNull Context context) {
         return new RecyclerView(context);
+    }
+
+    public static INavigationBar getDefaultHorizontalNavigationBar(@NonNull Context context) {
+        return new NavigationHorizontalScroll(context);
     }
 }

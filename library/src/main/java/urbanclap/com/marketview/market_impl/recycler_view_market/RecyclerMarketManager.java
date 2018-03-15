@@ -31,7 +31,6 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     @NonNull
     private RecyclerViewAdapter<IT, CT> adapter;
 
-
     public RecyclerMarketManager(@NonNull Context context,
                                  @NonNull Config<IT, NT, CT> config,
                                  @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
