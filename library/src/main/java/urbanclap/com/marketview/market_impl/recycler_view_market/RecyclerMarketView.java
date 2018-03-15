@@ -4,12 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import urbanclap.com.marketview.R;
 import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
 
@@ -59,7 +57,12 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
         stickyViewPos = -1;
         marketSectionViewPos = -1;
 
-        LayoutInflater.from(getContext()).inflate(R.layout.market_layout, this);
+        setLayoutParams(
+                new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                ));
+        setOrientation(VERTICAL);
     }
 
     @Override
@@ -81,7 +84,6 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 )
         );
-
     }
 
     @Override
@@ -103,7 +105,6 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 )
         );
-
     }
 
     @Override

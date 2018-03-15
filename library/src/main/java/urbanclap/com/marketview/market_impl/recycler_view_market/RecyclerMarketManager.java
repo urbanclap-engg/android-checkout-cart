@@ -1,6 +1,7 @@
 package urbanclap.com.marketview.market_impl.recycler_view_market;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -46,6 +47,8 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
                                   @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
         super(config);
         this.recyclerView = recyclerView;
+        // TODO: 15/Mar/18 @adnaan: remove the below coloring..
+        this.recyclerView.setBackgroundColor(Color.parseColor("#AAFFAA"));
         this.itemPool = new ItemPool<>(sections);
         this.adapter = new RecyclerViewAdapter<>(this.itemPool, itemFactory, this);
     }

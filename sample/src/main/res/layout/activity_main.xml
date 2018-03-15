@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     tools:context="urbanclap.com.marketviewsample.MainActivity">
 
+    <!--TODO remove the below coloring-->
     <urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketView
         android:id="@+id/market"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#AAAAFF" />
+
 
 </FrameLayout>

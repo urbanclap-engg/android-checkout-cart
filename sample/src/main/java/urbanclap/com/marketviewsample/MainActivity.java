@@ -81,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         MarketManager.Config<PokemonCartBaseItem, String, Void> config = new MarketManager.Config<>();
-        config.setSections(sections);
-//        config.setNavigator(
-//                RecyclerMarketManagerUtils.getDefaultHorizontalNavigationBar(this),
-//                new NavigationItemFactory()
-//        );
+        config.setSections(sections)
+                .setNavigator(
+                        RecyclerMarketManagerUtils.getDefaultHorizontalNavigationBar(this),
+                        new NavigationItemFactory()
+                );
 
         MarketManager<PokemonCartBaseItem, String, Void> marketManager =
                 new RecyclerMarketManager<>(this, config, new ItemFactory());
