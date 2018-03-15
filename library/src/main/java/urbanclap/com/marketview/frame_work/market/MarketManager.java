@@ -45,7 +45,6 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         this.navigationFactory = config.navigationFactory;
         this.stickyView = config.stickyView;
         this.cart = config.cart;
-        initManagement();
     }
 
     private void initManagement() {
@@ -85,6 +84,11 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
             addSection(section);
     }
 
+    public void bindMarketManager(@NonNull IMarketView marketView) {
+        handleBindMarketManager(marketView);
+        initManagement();
+    }
+
     protected abstract void initSectionsManager();
 
     protected abstract void initStickyManager();
@@ -96,7 +100,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
     public abstract boolean removeSection(@NonNull String sectionId);
 
-    public abstract void bindMarketManager(@NonNull IMarketView marketView);
+    protected abstract void handleBindMarketManager(@NonNull IMarketView marketView);
 
 
     public static class Config<IT, NT, CT> {
@@ -112,9 +116,6 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         @Nullable
         private ICart<CT> cart;
 
-        public Config() {
-        }
-
         public Config<IT, NT, CT> setNavigator(@Nullable INavigationBar navigationBar, @Nullable INavigationFactory<NT> navigationFactory) {
             this.navigationBar = navigationBar;
             this.navigationFactory = navigationFactory;
@@ -122,8 +123,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         }
 
         public Config<IT, NT, CT> setSections(@NonNull List<Section<IT>> sections) {
-            this.sections = new ArrayList<>();
-            this.sections.addAll(sections);
+            this.sections = sections;
             return this;
         }
 

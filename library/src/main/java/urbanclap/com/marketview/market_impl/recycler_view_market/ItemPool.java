@@ -20,7 +20,7 @@ public class ItemPool<T> {
     @NonNull
     private List<ItemPoolObject<T>> itemPoolObjectList;
 
-    public ItemPool(List<Section<T>> sections) {
+    ItemPool(List<Section<T>> sections) {
         itemPoolObjectList = new ArrayList<>();
         add(sections);
     }
@@ -32,7 +32,7 @@ public class ItemPool<T> {
 
     public void add(Section<T> section) {
         int pos = containsFirst(section.getId());
-        if (pos == -1) {
+        if (pos != -1) {
             update(section, pos);
             return;
         }
@@ -52,7 +52,7 @@ public class ItemPool<T> {
             remove(id);
     }
 
-    public void remove(@NonNull String id) {
+    private void remove(@NonNull String id) {
         List<ItemPoolObject<T>> listToRemove = new ArrayList<>();
         for (ItemPoolObject<T> itemPoolObject : itemPoolObjectList) {
             if (itemPoolObject.getSectionId().equals(id))
@@ -62,7 +62,7 @@ public class ItemPool<T> {
     }
 
     @NonNull
-    public List<ItemData<T>> getItemDataList() {
+    List<ItemData<T>> getItemDataList() {
         List<ItemData<T>> itemDataList = new ArrayList<>();
         for (ItemPoolObject<T> itemPoolObject : itemPoolObjectList) {
             itemDataList.add(itemPoolObject.getItemData());
@@ -71,7 +71,7 @@ public class ItemPool<T> {
     }
 
     @NonNull
-    public List<ItemPoolObject<T>> getItemPoolObjectList() {
+    List<ItemPoolObject<T>> getItemPoolObjectList() {
         return itemPoolObjectList;
     }
 

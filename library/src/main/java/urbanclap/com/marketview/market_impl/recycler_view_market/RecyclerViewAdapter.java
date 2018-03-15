@@ -94,7 +94,7 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerViewItemV
 
     @Override
     public RecyclerViewItemViewHolder<IT, CT> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return itemFactory.create(viewType, cartCallback);
+        return itemFactory.create(parent.getContext(), parent, viewType, cartCallback);
     }
 
     @Override

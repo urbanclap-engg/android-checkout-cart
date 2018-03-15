@@ -38,9 +38,9 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
         this(config, new RecyclerView(context), itemFactory);
     }
 
-    public RecyclerViewMarketManager(@NonNull Config<IT, NT, CT> config,
-                                     @NonNull RecyclerView recyclerView,
-                                     @NonNull RecyclerViewItemFactory<IT, CT> itemFactory) {
+    private RecyclerViewMarketManager(@NonNull Config<IT, NT, CT> config,
+                                      @NonNull RecyclerView recyclerView,
+                                      @NonNull RecyclerViewItemFactory<IT, CT> itemFactory) {
         super(config);
         this.recyclerView = recyclerView;
         this.itemPool = new ItemPool<>(sections);
@@ -96,7 +96,7 @@ public class RecyclerViewMarketManager<IT, NT, CT> extends MarketManager<IT, NT,
     }
 
     @Override
-    public void bindMarketManager(@NonNull IMarketView marketView) {
+    public void handleBindMarketManager(@NonNull IMarketView marketView) {
         View navigationBarView = navigationBar != null ? navigationBar.getView() : null;
         View stickySectionView = stickyView != null ? stickyView.getView() : null;
         marketView.addNavigationBar(navigationBarView);
