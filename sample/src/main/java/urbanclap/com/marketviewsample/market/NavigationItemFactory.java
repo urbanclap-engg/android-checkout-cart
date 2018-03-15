@@ -1,7 +1,7 @@
 package urbanclap.com.marketviewsample.market;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 
 import urbanclap.com.marketview.frame_work.navigation_bar.INavigationFactory;
 import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemViewHolder;
@@ -20,7 +20,7 @@ public class NavigationItemFactory implements INavigationFactory<String> {
     }
 
     @Override
-    public NavigationItemViewHolder<String> createViewHolder(int viewType, @NonNull ViewGroup parent) {
-        return new PokemonNavigationViewHolder(R.layout.navigation_bar_layout, parent);
+    public NavigationItemViewHolder<String> createViewHolder(int viewType, @NonNull Context context) {
+        return new PokemonNavigationViewHolder(R.layout.navigation_bar_layout, context);
     }
 }

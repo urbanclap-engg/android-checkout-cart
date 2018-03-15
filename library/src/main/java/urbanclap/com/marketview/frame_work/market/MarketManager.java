@@ -62,6 +62,9 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
                 if (itemData instanceof Routable)
                     //noinspection unchecked
                     routables.add((Routable<NT>) itemData);
+                else if (itemData.getViewModel() instanceof Routable)
+                    //noinspection unchecked
+                    routables.add((Routable<NT>) itemData.getViewModel());
             }
         }
         return routables;
@@ -74,7 +77,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         List<Routable<NT>> routables = getRoutableItemList();
         for (Routable<NT> routable : routables) {
             NavigationItemViewHolder<NT> navigationItemViewHolder =
-                    navigationFactory.createViewHolder(routable.getRouteViewType(), navigationBar.getView());
+                    navigationFactory.createViewHolder(routable.getRouteViewType(), navigationBar.getView().getContext());
             navigationItemViewHolder.bind(routable, this, routable.getRouteUUID());
             navigationBar.addView(navigationItemViewHolder.getNavigationItemView());
         }

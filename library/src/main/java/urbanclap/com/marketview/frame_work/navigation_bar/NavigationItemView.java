@@ -40,8 +40,8 @@ public class NavigationItemView extends FrameLayout {
         throw new IllegalStateException("This needs to be initialised with context only constructor");
     }
 
-    public void setContentView(@LayoutRes int id, @NonNull ViewGroup parent) {
-        LayoutInflater.from(getContext()).inflate(id, parent, false);
+    public void setContentView(@LayoutRes int id) {
+        LayoutInflater.from(getContext()).inflate(id, this, true);
     }
 
     public void setCallback(@Nullable OnNavigateCallback callback, @Nullable String id) {

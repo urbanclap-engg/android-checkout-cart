@@ -1,7 +1,7 @@
 package urbanclap.com.marketview.frame_work.navigation_bar;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -15,9 +15,9 @@ public abstract class NavigationItemViewHolder<T> {
     @NonNull
     private NavigationItemView navigationItemView;
 
-    public NavigationItemViewHolder(int layoutId, @NonNull ViewGroup parent) {
-        navigationItemView = new NavigationItemView(parent.getContext());
-        navigationItemView.setContentView(layoutId, parent);
+    public NavigationItemViewHolder(int layoutId, @NonNull Context context) {
+        navigationItemView = new NavigationItemView(context);
+        navigationItemView.setContentView(layoutId);
     }
 
     public void bind(@NonNull Routable<T> routable,

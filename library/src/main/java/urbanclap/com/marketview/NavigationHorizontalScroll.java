@@ -27,22 +27,21 @@ public class NavigationHorizontalScroll extends HorizontalScrollView implements 
     }
 
     private void init() {
-        setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         // TODO: 15/Mar/18 @adnaan: remove the below coloring...
         setBackgroundColor(Color.parseColor("#FFAAAA"));
         linearLayout = new LinearLayout(getContext());
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        addView(linearLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
     public void addView(@NonNull NavigationItemView navigationItemView) {
-        linearLayout.addView(navigationItemView);
+        linearLayout.addView(navigationItemView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
     public void addView(@NonNull NavigationItemView navigationItemView, int pos) {
-        linearLayout.addView(navigationItemView, pos);
+        linearLayout.addView(navigationItemView, pos, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
