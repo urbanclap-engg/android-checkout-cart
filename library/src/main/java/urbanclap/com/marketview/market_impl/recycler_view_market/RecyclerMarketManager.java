@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -27,6 +28,10 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
 
     @NonNull
     private RecyclerView recyclerView;
+    @NonNull
+    private RecyclerView.LayoutManager layoutManager;
+    @NonNull
+    private RecyclerView.SmoothScroller smoothScroller;
     @NonNull
     private ItemPool<IT> itemPool;
     @NonNull
@@ -51,11 +56,18 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
         this.recyclerView.setBackgroundColor(Color.parseColor("#AAFFAA"));
         this.itemPool = new ItemPool<>(sections);
         this.adapter = new RecyclerViewAdapter<>(this.itemPool, itemFactory, this);
+        this.layoutManager = new LinearLayoutManager(recyclerView.getContext());
+        this.smoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
+            @Override
+            protected int getVerticalSnapPreference() {
+                return SNAP_TO_START;
+            }
+        };
     }
 
     @Override
     protected void initSectionsManager() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
@@ -80,14 +92,16 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     public void navigateTo(@NonNull String id) {
         int pos = -1;
         for (int i = 0, len = itemPool.getItemDataList().size(); i < len; i++) {
-            if (itemPool.getItemDataList().get(pos).getUUID().equals(id)) {
+            if (itemPool.getItemDataList().get(i).getUUID().equals(id)) {
                 pos = i;
                 break;
             }
         }
 
-        if (pos != -1)
-            recyclerView.smoothScrollToPosition(pos);
+        if (pos != -1) {
+            smoothScroller.setTargetPosition(pos);
+            layoutManager.startSmoothScroll(smoothScroller);
+        }
     }
 
     @Override

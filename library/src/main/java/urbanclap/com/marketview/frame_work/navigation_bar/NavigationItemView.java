@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 
@@ -42,6 +41,7 @@ public class NavigationItemView extends FrameLayout {
 
     public void setContentView(@LayoutRes int id) {
         LayoutInflater.from(getContext()).inflate(id, this, true);
+        setOnClickListener(new NavigationItemClickListener(null));
     }
 
     public void setCallback(@Nullable OnNavigateCallback callback, @Nullable String id) {
