@@ -1,6 +1,7 @@
-package urbanclap.com.marketviewsample.entity;
+package urbanclap.com.marketviewsample.model;
 
 public class PokemonItem {
+
     private int uuid;
     private String name;
     private String description;

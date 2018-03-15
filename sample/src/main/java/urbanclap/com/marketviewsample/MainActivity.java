@@ -19,9 +19,12 @@ import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.Section;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketView;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerViewMarketManager;
-import urbanclap.com.marketviewsample.entity.PokemonItem;
+import urbanclap.com.marketviewsample.market.CartItem;
 import urbanclap.com.marketviewsample.market.ItemFactory;
-import urbanclap.com.marketviewsample.market.MarketItem;
+import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
+import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
+import urbanclap.com.marketviewsample.market.entity.PokemonSectionItem;
+import urbanclap.com.marketviewsample.model.PokemonItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,33 +51,43 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        List<Section<PokemonItem>> sections = new ArrayList<>();
+        List<Section<PokemonCartBaseItem>> sections = new ArrayList<>();
 
         JSONObject pokemonTypeResponse = new JSONObject(pokemonJsonStr);
         JSONArray pokemonTypeArr = pokemonTypeResponse.getJSONArray("pokemons_types");
         for (int i = 0, len = pokemonTypeArr.length(); i < len; i++) {
             JSONObject pokemonType = pokemonTypeArr.getJSONObject(i);
             String id = pokemonType.getString("uuid");
+            String type = pokemonType.getString("type");
             List<PokemonItem> pokemonItems = createPokemonItemListFromJson(pokemonType.getJSONArray("pokemons"));
-            List<ItemData<PokemonItem>> itemDataList = createItemDataList(pokemonItems);
+
+            List<ItemData<PokemonCartBaseItem>> itemDataList = new ArrayList<>();
+            PokemonSectionItem sectionItem = new PokemonSectionItem(type);
+            itemDataList.add(new CartItem(sectionItem));
+
+            addPokemonItemDataInList(pokemonItems, itemDataList);
             sections.add(new Section<>(id, itemDataList));
         }
 
-        MarketManager.Config<PokemonItem, Void, Void> config = new MarketManager.Config<>();
+        MarketManager.Config<PokemonCartBaseItem, Void, Void> config = new MarketManager.Config<>();
         config.setSections(sections);
 
-        MarketManager<PokemonItem, Void, Void> marketManager =
+        MarketManager<PokemonCartBaseItem, Void, Void> marketManager =
                 new RecyclerViewMarketManager<>(this, config, new ItemFactory());
 
         marketView.bindMarketManager(marketManager);
     }
 
-    private List<ItemData<PokemonItem>> createItemDataList(List<PokemonItem> pokemonItems) {
-        List<ItemData<PokemonItem>> list = new ArrayList<>();
+    private void addPokemonItemDataInList(List<PokemonItem> pokemonItems,
+                                          List<ItemData<PokemonCartBaseItem>> itemDataList) {
         for (PokemonItem pokemonItem : pokemonItems) {
-            list.add(new MarketItem(pokemonItem));
+            PokemonCartItem cartItem = new PokemonCartItem(
+                    pokemonItem.getUuid(),
+                    pokemonItem.getName(),
+                    pokemonItem.getDescription()
+            );
+            itemDataList.add(new CartItem(cartItem));
         }
-        return list;
     }
 
     private String loadJson() {
@@ -109,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.getInt("uuid"),
                 jsonObject.getString("name"),
                 jsonObject.getString("description")
-
         );
     }
 }

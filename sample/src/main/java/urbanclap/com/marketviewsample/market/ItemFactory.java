@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemFactory;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemViewHolder;
 import urbanclap.com.marketviewsample.R;
-import urbanclap.com.marketviewsample.entity.PokemonItem;
+import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -17,11 +17,17 @@ import urbanclap.com.marketviewsample.entity.PokemonItem;
  */
 
 
-public class ItemFactory extends RecyclerItemFactory<PokemonItem, Void> {
+public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, Void> {
 
     @Override
-    public RecyclerItemViewHolder<PokemonItem, Void> createViewHolder(@NonNull Context context,
-                                                                      @NonNull ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false));
+    public RecyclerItemViewHolder<PokemonCartBaseItem, Void> createViewHolder(@NonNull Context context,
+                                                                              @NonNull ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case PokemonCartBaseItem.TYPE_CART:
+                return new CartItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false));
+            case PokemonCartBaseItem.TYPE_SECTION:
+                return new SectionItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_section_layout, parent, false));
+        }
+        return null;
     }
 }

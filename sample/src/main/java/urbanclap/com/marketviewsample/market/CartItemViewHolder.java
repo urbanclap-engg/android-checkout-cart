@@ -5,7 +5,8 @@ import android.widget.TextView;
 
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemViewHolder;
 import urbanclap.com.marketviewsample.R;
-import urbanclap.com.marketviewsample.entity.PokemonItem;
+import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
+import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -14,13 +15,13 @@ import urbanclap.com.marketviewsample.entity.PokemonItem;
  */
 
 
-public class ItemViewHolder extends RecyclerItemViewHolder<PokemonItem, Void> {
+public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, Void> {
 
     private TextView tvId;
     private TextView tvName;
     private TextView tvDesc;
 
-    public ItemViewHolder(View itemView) {
+    CartItemViewHolder(View itemView) {
         super(itemView);
         tvId = itemView.findViewById(R.id.tv_item_id);
         tvName = itemView.findViewById(R.id.tv_item_name);
@@ -28,7 +29,8 @@ public class ItemViewHolder extends RecyclerItemViewHolder<PokemonItem, Void> {
     }
 
     @Override
-    public void onBindView(PokemonItem viewModel) {
+    public void onBindView(PokemonCartBaseItem vm) {
+        PokemonCartItem viewModel = (PokemonCartItem) vm;
         tvId.setText("# " + viewModel.getUuid());
         tvName.setText(viewModel.getName());
         tvDesc.setText(viewModel.getDescription());

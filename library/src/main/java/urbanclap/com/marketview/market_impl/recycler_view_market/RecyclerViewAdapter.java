@@ -99,6 +99,9 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
 
     @Override
     public void onBindViewHolder(RecyclerItemViewHolder<IT, CT> holder, int position) {
+        if (holder == null)
+            return;
+
         holder.onBindView(itemPool.getItemDataList().get(position).getViewModel());
     }
 

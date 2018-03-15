@@ -1,4 +1,4 @@
-package urbanclap.com.marketviewsample.entity;
+package urbanclap.com.marketviewsample.model;
 
 import java.util.List;
 
