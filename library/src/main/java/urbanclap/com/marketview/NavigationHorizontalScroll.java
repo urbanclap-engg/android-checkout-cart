@@ -1,7 +1,6 @@
 package urbanclap.com.marketview;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -27,8 +26,6 @@ public class NavigationHorizontalScroll extends HorizontalScrollView implements 
     }
 
     private void init() {
-        // TODO: 15/Mar/18 @adnaan: remove the below coloring...
-        setBackgroundColor(Color.parseColor("#FFAAAA"));
         linearLayout = new LinearLayout(getContext());
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         addView(linearLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
