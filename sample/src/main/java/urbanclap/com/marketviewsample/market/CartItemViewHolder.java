@@ -7,6 +7,7 @@ import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemVie
 import urbanclap.com.marketviewsample.R;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
+import urbanclap.com.marketviewsample.model.PokemonItem;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -15,13 +16,13 @@ import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
  */
 
 
-public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, Void> {
+public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, PokemonItem> {
 
     private TextView tvId;
     private TextView tvName;
     private TextView tvDesc;
 
-    CartItemViewHolder(View itemView) {
+    CartItemViewHolder(final View itemView) {
         super(itemView);
         tvId = itemView.findViewById(R.id.tv_item_id);
         tvName = itemView.findViewById(R.id.tv_item_name);
@@ -29,15 +30,17 @@ public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseIt
     }
 
     @Override
-    public void onBindView(PokemonCartBaseItem vm) {
-        PokemonCartItem viewModel = (PokemonCartItem) vm;
+    public void onBindView(final PokemonCartBaseItem vm) {
+        final PokemonCartItem viewModel = (PokemonCartItem) vm;
         tvId.setText("# " + viewModel.getUuid());
         tvName.setText(viewModel.getName());
         tvDesc.setText(viewModel.getDescription());
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                increment(vm.id(), new PokemonItem(Integer.parseInt(viewModel.id()), viewModel.getName(), viewModel.getDescription()));
+            }
+        });
     }
 
-    @Override
-    public void addToCart() {
-        // nothing to do...
-    }
 }

@@ -9,6 +9,4 @@ package urbanclap.com.marketview.frame_work.market.interfaces;
 
 public interface IItemViewHolder<T> {
     void onBindView(T viewModel);
-
-    void addToCart();
 }

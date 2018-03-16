@@ -29,6 +29,22 @@ public class CartItem<I> {
         this.quantity = quantity;
     }
 
+    public void incrementQuantity() {
+        incrementQuantity(1);
+    }
+
+    public void incrementQuantity(int delta) {
+        this.quantity += delta;
+    }
+
+    public void decrementQuantity(int delta) {
+        this.quantity -= delta;
+    }
+
+    public void decrementQuantity() {
+        decrementQuantity(1);
+    }
+
     @NonNull
     public I getItem() {
         return item;

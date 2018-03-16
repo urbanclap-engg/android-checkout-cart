@@ -29,6 +29,7 @@ import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketV
 import urbanclap.com.marketviewsample.market.CartItem;
 import urbanclap.com.marketviewsample.market.ItemFactory;
 import urbanclap.com.marketviewsample.market.NavigationItemFactory;
+import urbanclap.com.marketviewsample.market.PokemonCart;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonSectionItem;
@@ -89,15 +90,17 @@ public class MainActivity extends AppCompatActivity {
             sections.add(section);
         }
 
-        MarketManager.Config<PokemonCartBaseItem, String, Void> config = new MarketManager.Config<>();
+
+        MarketManager.Config<PokemonCartBaseItem, String, PokemonItem> config = new MarketManager.Config<>();
         config.setSections(sections)
+                .setCart(new PokemonCart())
                 .setSticky(RecyclerMarketManagerUtils.getDefaultStickyView(this))
                 .setNavigator(
                         RecyclerMarketManagerUtils.getDefaultHorizontalNavigationBar(this),
                         new NavigationItemFactory()
                 );
 
-        MarketManager<PokemonCartBaseItem, String, Void> marketManager =
+        MarketManager<PokemonCartBaseItem, String, PokemonItem> marketManager =
                 new RecyclerMarketManager<>(this, config, new ItemFactory());
 
         marketView.bindMarketManager(marketManager);

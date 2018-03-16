@@ -28,9 +28,9 @@ public interface ICart<I> {
 
     void decrement(@NonNull String uuid);
 
-    CartItem<I> getITem(@NonNull String uuid);
+    CartItem<I> getItem(@NonNull String uuid);
 
-    void clear(@NonNull String uuid);
+    void remove(@NonNull String uuid);
 
     void clear();
 }

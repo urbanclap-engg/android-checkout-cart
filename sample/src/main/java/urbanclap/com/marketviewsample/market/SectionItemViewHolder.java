@@ -7,6 +7,7 @@ import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemVie
 import urbanclap.com.marketviewsample.R;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonSectionItem;
+import urbanclap.com.marketviewsample.model.PokemonItem;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -15,7 +16,7 @@ import urbanclap.com.marketviewsample.market.entity.PokemonSectionItem;
  */
 
 
-public class SectionItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, Void> {
+public class SectionItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, PokemonItem> {
 
     private TextView tvTitle;
 
@@ -30,8 +31,4 @@ public class SectionItemViewHolder extends RecyclerItemViewHolder<PokemonCartBas
         tvTitle.setText(sectionItem.getTitle());
     }
 
-    @Override
-    public void addToCart() {
-        // nothing to do
-    }
 }

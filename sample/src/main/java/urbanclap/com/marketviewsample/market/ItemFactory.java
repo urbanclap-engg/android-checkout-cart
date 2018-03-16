@@ -9,6 +9,7 @@ import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemFac
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemViewHolder;
 import urbanclap.com.marketviewsample.R;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
+import urbanclap.com.marketviewsample.model.PokemonItem;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
@@ -17,10 +18,10 @@ import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
  */
 
 
-public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, Void> {
+public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, PokemonItem> {
 
     @Override
-    public RecyclerItemViewHolder<PokemonCartBaseItem, Void> createViewHolder(@NonNull Context context,
+    public RecyclerItemViewHolder<PokemonCartBaseItem, PokemonItem> createViewHolder(@NonNull Context context,
                                                                               @NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case PokemonCartBaseItem.TYPE_CART:
