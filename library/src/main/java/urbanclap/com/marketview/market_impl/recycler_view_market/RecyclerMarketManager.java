@@ -96,7 +96,6 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
         }
 
         if (pos != -1) {
-            // TODO: 16/Mar/18 @adnaan: handle ended scrolling...
             smoothScroller.setTargetPosition(pos);
             layoutManager.startSmoothScroll(smoothScroller);
         }

@@ -75,15 +75,18 @@ public class MainActivity extends AppCompatActivity {
 
             addPokemonItemDataInList(pokemonItems, itemDataList);
             Section<PokemonCartBaseItem> section;
-            section = new Section<>(id, itemDataList, new IStickyViewItem() {
-                @Override
-                public View createView(@NonNull ViewGroup parent) {
-                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_layout, parent, false);
-                    TextView textView = view.findViewById(R.id.tv_itemSection_title);
-                    textView.setText(type);
-                    return view;
-                }
-            });
+            if (type.equalsIgnoreCase("water"))
+                section = new Section<>(id, itemDataList);
+            else
+                section = new Section<>(id, itemDataList, new IStickyViewItem() {
+                    @Override
+                    public View createView(@NonNull ViewGroup parent) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_layout, parent, false);
+                        TextView textView = view.findViewById(R.id.tv_itemSection_title);
+                        textView.setText(type);
+                        return view;
+                    }
+                });
             sections.add(section);
         }
 
