@@ -16,6 +16,7 @@ import urbanclap.com.marketview.frame_work.market.interfaces.IItemViewHolder;
  */
 
 
+@SuppressWarnings("unused")
 public abstract class RecyclerItemViewHolder<T, CT> extends RecyclerView.ViewHolder
         implements IItemViewHolder<T> {
 
@@ -39,6 +40,4 @@ public abstract class RecyclerItemViewHolder<T, CT> extends RecyclerView.ViewHol
         if (cartCallback != null)
             cartCallback.decrementInCart(uuid);
     }
-
-
 }

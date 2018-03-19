@@ -1,10 +1,9 @@
-package urbanclap.com.marketview.market_impl.recycler_view_market;
+package urbanclap.com.marketview.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
-import urbanclap.com.marketview.NavigationHorizontalScroll;
 import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
 import urbanclap.com.marketview.frame_work.sticky.IStickyView;
 
@@ -15,7 +14,7 @@ import urbanclap.com.marketview.frame_work.sticky.IStickyView;
  */
 
 
-public class RecyclerMarketManagerUtils {
+public class MarketUtils {
 
     public static IStickyView getDefaultStickyView(@NonNull Context context) {
         return new StickyFrameLayout(context);

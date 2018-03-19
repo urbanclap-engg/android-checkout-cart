@@ -16,6 +16,7 @@ import urbanclap.com.marketview.frame_work.market.Section;
  */
 
 
+@SuppressWarnings("unused")
 public class ItemPool<T> {
     @NonNull
     private List<ItemPoolObject<T>> itemPoolObjectList;
@@ -52,7 +53,7 @@ public class ItemPool<T> {
             remove(id);
     }
 
-    private void remove(@NonNull String id) {
+    public void remove(@NonNull String id) {
         List<ItemPoolObject<T>> listToRemove = new ArrayList<>();
         for (ItemPoolObject<T> itemPoolObject : itemPoolObjectList) {
             if (itemPoolObject.getSectionId().equals(id))

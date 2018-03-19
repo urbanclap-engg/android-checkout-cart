@@ -53,7 +53,7 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (scrollCallback != null)
-                    scrollCallback.onScrollPosition(layoutManager.findFirstCompletelyVisibleItemPosition());
+                    scrollCallback.onScrollPosition(layoutManager.findFirstVisibleItemPosition());
 
                 if (recyclerViewScrollCallbacks != null) {
                     recyclerViewScrollCallbacks.onScrolled(recyclerView, dx, dy);

@@ -66,7 +66,7 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
     }
 
     @Override
-    public void addNavigationBar(@Nullable View navigationBar) {
+    public void addNavigationBar(@Nullable View navigationBar, @NonNull ViewGroup.LayoutParams layoutParams) {
 
         if (this.navigationBar != null && navigationBarPos >= 0)
             removeViewAt(navigationBarPos);
@@ -76,18 +76,11 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
             return;
         }
         navigationBarPos = 0;
-        addView(
-                this.navigationBar,
-                navigationBarPos,
-                new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-        );
+        addView(this.navigationBar, navigationBarPos, layoutParams);
     }
 
     @Override
-    public void addStickyViewHolder(@Nullable View stickyView) {
+    public void addStickyViewHolder(@Nullable View stickyView, @NonNull ViewGroup.LayoutParams layoutParams) {
 
         if (this.stickyView != null && stickyViewPos >= 0)
             removeViewAt(stickyViewPos);
@@ -97,18 +90,11 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
             return;
         }
         stickyViewPos = navigationBarPos + 1;
-        addView(
-                this.stickyView,
-                stickyViewPos,
-                new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-        );
+        addView(this.stickyView, stickyViewPos, layoutParams);
     }
 
     @Override
-    public void addIMarketSectionView(@Nullable View marketSectionView) {
+    public void addIMarketSectionView(@Nullable View marketSectionView, @NonNull ViewGroup.LayoutParams layoutParams) {
 
         if (this.marketSectionView != null && marketSectionViewPos >= 0)
             removeViewAt(marketSectionViewPos);
@@ -118,14 +104,7 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
             return;
         }
         marketSectionViewPos = Math.max(navigationBarPos, stickyViewPos) + 1;
-        addView(
-                this.marketSectionView,
-                marketSectionViewPos,
-                new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                )
-        );
+        addView(this.marketSectionView, marketSectionViewPos, layoutParams);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package urbanclap.com.marketview.market_impl.recycler_view_market;
+package urbanclap.com.marketview.utils;
 
 import android.content.Context;
 import android.graphics.Color;

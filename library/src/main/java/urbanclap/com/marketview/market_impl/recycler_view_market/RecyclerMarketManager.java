@@ -1,7 +1,6 @@
 package urbanclap.com.marketview.market_impl.recycler_view_market;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,12 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import urbanclap.com.marketview.frame_work.cart.CartCallback;
 import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.Section;
 import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
 import urbanclap.com.marketview.frame_work.sticky.IStickyManager;
+import urbanclap.com.marketview.utils.MarketUtils;
 
 
 /**
@@ -24,6 +25,7 @@ import urbanclap.com.marketview.frame_work.sticky.IStickyManager;
  */
 
 
+@SuppressWarnings("unused")
 public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT> implements CartCallback<CT> {
 
     @NonNull
@@ -40,11 +42,8 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     public RecyclerMarketManager(@NonNull Context context,
                                  @NonNull Config<IT, NT, CT> config,
                                  @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
-        this(
-                config,
-                RecyclerMarketManagerUtils.getDefaultRecycler(context),
-                itemFactory
-        );
+
+        this(config, MarketUtils.getDefaultRecycler(context), itemFactory);
     }
 
     private RecyclerMarketManager(@NonNull Config<IT, NT, CT> config,
@@ -97,6 +96,7 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
         }
 
         if (pos != -1) {
+            // TODO: 16/Mar/18 @adnaan: handle ended scrolling...
             smoothScroller.setTargetPosition(pos);
             layoutManager.startSmoothScroll(smoothScroller);
         }
@@ -117,9 +117,9 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     public void handleBindMarketManager(@NonNull IMarketView marketView) {
         View navigationBarView = navigationBar != null ? navigationBar.getView() : null;
         View stickySectionView = stickyView != null ? stickyView.getView() : null;
-        marketView.addNavigationBar(navigationBarView);
-        marketView.addStickyViewHolder(stickySectionView);
-        marketView.addIMarketSectionView(recyclerView);
+        marketView.addNavigationBar(navigationBarView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        marketView.addStickyViewHolder(stickySectionView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        marketView.addIMarketSectionView(recyclerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     @Override

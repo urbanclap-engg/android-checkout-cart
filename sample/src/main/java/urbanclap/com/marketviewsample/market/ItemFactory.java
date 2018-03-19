@@ -22,12 +22,18 @@ public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, Pokemo
 
     @Override
     public RecyclerItemViewHolder<PokemonCartBaseItem, PokemonItem> createViewHolder(@NonNull Context context,
-                                                                              @NonNull ViewGroup parent, int viewType) {
+                                                                                     @NonNull ViewGroup parent,
+                                                                                     int viewType) {
         switch (viewType) {
             case PokemonCartBaseItem.TYPE_CART:
-                return new CartItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false));
+                return new CartItemViewHolder(LayoutInflater
+                        .from(context)
+                        .inflate(R.layout.item_layout, parent, false));
+
             case PokemonCartBaseItem.TYPE_SECTION:
-                return new SectionItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_section_layout, parent, false));
+                return new SectionItemViewHolder(LayoutInflater
+                        .from(context)
+                        .inflate(R.layout.item_section_layout, parent, false));
         }
         return null;
     }

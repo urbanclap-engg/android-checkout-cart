@@ -24,8 +24,8 @@ import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.Section;
 import urbanclap.com.marketview.frame_work.sticky.IStickyViewItem;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketManager;
-import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketManagerUtils;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketView;
+import urbanclap.com.marketview.utils.MarketUtils;
 import urbanclap.com.marketviewsample.market.CartItem;
 import urbanclap.com.marketviewsample.market.ItemFactory;
 import urbanclap.com.marketviewsample.market.NavigationItemFactory;
@@ -75,18 +75,15 @@ public class MainActivity extends AppCompatActivity {
 
             addPokemonItemDataInList(pokemonItems, itemDataList);
             Section<PokemonCartBaseItem> section;
-            if (type.equalsIgnoreCase("water"))
-                section = new Section<>(id, itemDataList);
-            else
-                section = new Section<>(id, itemDataList, new IStickyViewItem() {
-                    @Override
-                    public View createView(@NonNull ViewGroup parent) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_layout, parent, false);
-                        TextView textView = view.findViewById(R.id.tv_itemSection_title);
-                        textView.setText(type);
-                        return view;
-                    }
-                });
+            section = new Section<>(id, itemDataList, new IStickyViewItem() {
+                @Override
+                public View createView(@NonNull ViewGroup parent) {
+                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_section_layout, parent, false);
+                    TextView textView = view.findViewById(R.id.tv_itemSection_title);
+                    textView.setText(type);
+                    return view;
+                }
+            });
             sections.add(section);
         }
 
@@ -94,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
         MarketManager.Config<PokemonCartBaseItem, String, PokemonItem> config = new MarketManager.Config<>();
         config.setSections(sections)
                 .setCart(new PokemonCart())
-                .setSticky(RecyclerMarketManagerUtils.getDefaultStickyView(this))
+                .setSticky(MarketUtils.getDefaultStickyView(this))
                 .setNavigator(
-                        RecyclerMarketManagerUtils.getDefaultHorizontalNavigationBar(this),
+                        MarketUtils.getDefaultHorizontalNavigationBar(this),
                         new NavigationItemFactory()
                 );
 
