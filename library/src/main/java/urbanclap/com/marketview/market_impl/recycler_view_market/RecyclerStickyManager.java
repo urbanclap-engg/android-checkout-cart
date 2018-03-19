@@ -69,10 +69,10 @@ public class RecyclerStickyManager implements IStickyManager {
                 }
             }
 
-            if (startIndex != -1 && endIndex != -1 && (startIndex + 1 <= endIndex)) {
+            if (startIndex != -1 && endIndex != -1) {
                 stickyViews.add(section.getStickyViewItem().createView(stickyView.getView()));
                 int pos = stickyViews.size() - 1;
-                for (int i = startIndex + 1; i <= endIndex; i++) {
+                for (int i = startIndex; i <= endIndex; i++) {
                     viewMap.append(i, pos);
                 }
             }

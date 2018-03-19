@@ -1,13 +1,15 @@
 package urbanclap.com.marketview.market_impl.recycler_view_market;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import urbanclap.com.marketview.R;
 import urbanclap.com.marketview.frame_work.market.MarketManager;
 import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
 
@@ -18,7 +20,7 @@ import urbanclap.com.marketview.frame_work.market.interfaces.IMarketView;
  */
 
 
-public class RecyclerMarketView extends LinearLayout implements IMarketView {
+public class RecyclerMarketView extends RelativeLayout implements IMarketView {
 
     @Nullable
     private View navigationBar;
@@ -26,11 +28,6 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
     private View stickyView;
     @Nullable
     private View marketSectionView;
-
-    private int navigationBarPos;
-    private int stickyViewPos;
-    private int marketSectionViewPos;
-
 
     public RecyclerMarketView(Context context) {
         super(context);
@@ -53,62 +50,128 @@ public class RecyclerMarketView extends LinearLayout implements IMarketView {
         stickyView = null;
         marketSectionView = null;
 
-        navigationBarPos = -1;
-        stickyViewPos = -1;
-        marketSectionViewPos = -1;
-
         setLayoutParams(
                 new ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                 ));
-        setOrientation(VERTICAL);
     }
 
     @Override
-    public void addNavigationBar(@Nullable View navigationBar, @NonNull ViewGroup.LayoutParams layoutParams) {
+    public void addNavigationBar(@Nullable View navigationBar, @NonNull ViewGroup.LayoutParams lp) {
 
-        if (this.navigationBar != null && navigationBarPos >= 0)
-            removeViewAt(navigationBarPos);
+        if (this.navigationBar != null)
+            removeView(this.navigationBar);
+
         this.navigationBar = navigationBar;
-        if (this.navigationBar == null) {
-            navigationBarPos = -1;
-            return;
+        if (this.navigationBar != null) {
+            this.navigationBar.setId(R.id.recycler_market_view_navigation_container);
+            this.navigationBar.setLayoutParams(lp);
         }
-        navigationBarPos = 0;
-        addView(this.navigationBar, navigationBarPos, layoutParams);
+        updateUI(true, true);
     }
 
     @Override
-    public void addStickyViewHolder(@Nullable View stickyView, @NonNull ViewGroup.LayoutParams layoutParams) {
+    public void addStickyViewHolder(@Nullable View stickyView, @NonNull ViewGroup.LayoutParams lp) {
 
-        if (this.stickyView != null && stickyViewPos >= 0)
-            removeViewAt(stickyViewPos);
+        if (this.stickyView != null)
+            removeView(this.stickyView);
+
         this.stickyView = stickyView;
-        if (this.stickyView == null) {
-            stickyViewPos = -1;
-            return;
+        if (this.stickyView != null) {
+            this.stickyView.setId(R.id.recycler_market_view_frame_container);
+            this.stickyView.setLayoutParams(lp);
         }
-        stickyViewPos = navigationBarPos + 1;
-        addView(this.stickyView, stickyViewPos, layoutParams);
+        updateUI(false, false);
     }
 
     @Override
-    public void addIMarketSectionView(@Nullable View marketSectionView, @NonNull ViewGroup.LayoutParams layoutParams) {
+    public void addIMarketSectionView(@Nullable View marketSectionView, @NonNull ViewGroup.LayoutParams lp) {
 
-        if (this.marketSectionView != null && marketSectionViewPos >= 0)
-            removeViewAt(marketSectionViewPos);
+        if (this.marketSectionView != null)
+            removeView(this.marketSectionView);
+
         this.marketSectionView = marketSectionView;
-        if (this.marketSectionView == null) {
-            marketSectionViewPos = -1;
-            return;
+        if (this.marketSectionView != null) {
+            this.marketSectionView.setId(R.id.recycler_market_view_recycler_container);
+            this.marketSectionView.setLayoutParams(lp);
         }
-        marketSectionViewPos = Math.max(navigationBarPos, stickyViewPos) + 1;
-        addView(this.marketSectionView, marketSectionViewPos, layoutParams);
+        updateUI(false, true);
     }
 
     @Override
     public void bindMarketManager(@NonNull MarketManager<?, ?, ?> marketManager) {
         marketManager.bindMarketManager(this);
     }
+
+    private void updateUI(boolean updateNavBar, boolean updateSectionView) {
+        if (navigationBar == null)
+            updateNoNavBarUI(updateSectionView);
+        else updateNavBarUI(updateNavBar, updateSectionView);
+    }
+
+    private void updateNoNavBarUI(boolean updateSectionView) {
+        RelativeLayout.LayoutParams layoutParams;
+        if (marketSectionView != null && updateSectionView) {
+            layoutParams = new RelativeLayout.LayoutParams(marketSectionView.getLayoutParams());
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+            }
+            replaceView(marketSectionView, layoutParams);
+        }
+
+        if (stickyView != null) {
+            layoutParams = new RelativeLayout.LayoutParams(stickyView.getLayoutParams());
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+            }
+            replaceView(stickyView, layoutParams);
+        }
+    }
+
+    private void updateNavBarUI(boolean updateNavBar, boolean updateSectionView) {
+
+        RelativeLayout.LayoutParams layoutParams;
+
+        if (updateNavBar) {
+            assert navigationBar != null;
+            layoutParams = new RelativeLayout.LayoutParams(navigationBar.getLayoutParams());
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+            }
+            replaceView(navigationBar, layoutParams);
+        }
+
+        if (marketSectionView != null && updateSectionView) {
+            layoutParams = new RelativeLayout.LayoutParams(marketSectionView.getLayoutParams());
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            layoutParams.addRule(RelativeLayout.BELOW, R.id.recycler_market_view_navigation_container);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                layoutParams.addRule(RelativeLayout.ALIGN_START);
+            }
+            replaceView(marketSectionView, layoutParams);
+        }
+
+        if (stickyView != null) {
+            layoutParams = new RelativeLayout.LayoutParams(stickyView.getLayoutParams());
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            layoutParams.addRule(RelativeLayout.BELOW, R.id.recycler_market_view_navigation_container);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                layoutParams.addRule(RelativeLayout.ALIGN_START);
+            }
+            replaceView(stickyView, layoutParams);
+        }
+    }
+
+    private void replaceView(@NonNull View view, @NonNull LayoutParams layoutParams) {
+        removeView(view);
+        addView(view, layoutParams);
+    }
+
 }

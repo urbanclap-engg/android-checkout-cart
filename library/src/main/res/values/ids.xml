@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="recycler_market_view_navigation_container" type="id" />
+    <item name="recycler_market_view_recycler_container" type="id" />
+    <item name="recycler_market_view_frame_container" type="id" />
+</resources>

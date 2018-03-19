@@ -28,7 +28,7 @@ public class StickyFrameLayout extends FrameLayout implements IStickyView {
     private void init() {
         ViewGroup.LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
-        setBackgroundColor(Color.parseColor("#F0f0f0"));
+        setBackgroundColor(Color.WHITE);
     }
 
     @Override
