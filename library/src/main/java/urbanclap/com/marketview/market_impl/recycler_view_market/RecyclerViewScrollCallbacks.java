@@ -3,6 +3,8 @@ package urbanclap.com.marketview.market_impl.recycler_view_market;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
+import urbanclap.com.marketview.frame_work.market.interfaces.MarketCallbacks;
+
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@urbanclap.com>
  * @version : 1.0.0
@@ -10,7 +12,7 @@ import android.support.v7.widget.RecyclerView;
  */
 
 
-public interface RecyclerViewScrollCallbacks {
+public interface RecyclerViewScrollCallbacks extends MarketCallbacks {
 
     void onScrolled(RecyclerView recyclerView, int dx, int dy);
 

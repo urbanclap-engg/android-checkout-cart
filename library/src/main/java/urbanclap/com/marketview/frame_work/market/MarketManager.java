@@ -13,6 +13,7 @@ import urbanclap.com.marketview.frame_work.navigation_bar.INavigationBar;
 import urbanclap.com.marketview.frame_work.navigation_bar.INavigationFactory;
 import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemView;
 import urbanclap.com.marketview.frame_work.navigation_bar.NavigationItemViewHolder;
+import urbanclap.com.marketview.frame_work.navigation_bar.OnNavigationItemSelectCallback;
 import urbanclap.com.marketview.frame_work.navigation_bar.Routable;
 import urbanclap.com.marketview.frame_work.sticky.IStickyView;
 
@@ -22,10 +23,13 @@ import urbanclap.com.marketview.frame_work.sticky.IStickyView;
  * @since : 12 Mar 2018 6:50 PM
  */
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.OnNavigateCallback {
 
     @NonNull
     protected List<Section<IT>> sections;
+    @NonNull
+    private List<Routable<NT>> routables;
 
     @Nullable
     protected INavigationBar navigationBar;
@@ -35,18 +39,25 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     protected IStickyView stickyView;
     @Nullable
     protected ICart<CT> cart;
+    @Nullable
+    protected OnNavigationItemSelectCallback<NT> navigationItemSelectCallback;
+
+    protected boolean isAutoNavBarItemScrollEnabled;
+
 
     public MarketManager(@NonNull Config<IT, NT, CT> config) {
-
 
         if (config.sections == null)
             throw new IllegalStateException("Sections cannot be null for the Market Manager initialisation");
 
         this.sections = config.sections;
+        this.routables = generateRoutableList();
         this.navigationBar = config.navigationBar;
         this.navigationFactory = config.navigationFactory;
         this.stickyView = config.stickyView;
         this.cart = config.cart;
+        this.navigationItemSelectCallback = config.navigationItemSelectCallback;
+        this.isAutoNavBarItemScrollEnabled = config.isAutoNavBarItemScrollEnabled;
     }
 
     private void initManagement() {
@@ -56,7 +67,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     }
 
     @NonNull
-    private List<Routable<NT>> getRoutableItemList() {
+    private List<Routable<NT>> generateRoutableList() {
         List<Routable<NT>> routables = new ArrayList<>();
         for (Section<IT> section : sections) {
             for (ItemData<IT> itemData : section.getItemDataList()) {
@@ -75,11 +86,12 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         if (navigationBar == null || navigationFactory == null)
             return;
         navigationBar.clear();
+        generateRoutableList();
 
-        List<Routable<NT>> routables = getRoutableItemList();
         for (Routable<NT> routable : routables) {
             NavigationItemViewHolder<NT> navigationItemViewHolder =
-                    navigationFactory.createViewHolder(routable.getRouteViewType(), navigationBar.getView().getContext());
+                    navigationFactory.createViewHolder(routable.getRouteViewType(),
+                            navigationBar.getView().getContext());
             navigationItemViewHolder.bind(routable, this, routable.getRouteUUID());
             navigationBar.addView(navigationItemViewHolder.getNavigationItemView());
         }
@@ -108,13 +120,23 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         initManagement();
     }
 
+    @Override
+    public void navigateTo(@NonNull String id) {
+        if (navigationItemSelectCallback != null)
+            navigationItemSelectCallback.onItemSelect(id, routables);
+        handleNavigateTo(id);
+    }
+
+    public void updateNavigationBar(List<Routable<NT>> routables) {
+        this.routables = routables;
+        initNavigationManagement();
+    }
+
     protected abstract void initSectionsManager();
 
     protected abstract void initStickyManager();
 
-    @Override
-    public abstract void navigateTo(@NonNull String id);
-
+    public abstract void handleNavigateTo(@Nullable String id);
 
     public abstract void handleAddSections(@NonNull List<Section<IT>> sectionList);
 
@@ -123,6 +145,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     protected abstract void handleBindMarketManager(@NonNull IMarketView marketView);
 
 
+    @SuppressWarnings("UnusedReturnValue")
     public static class Config<IT, NT, CT> {
 
         @Nullable
@@ -135,6 +158,9 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         private IStickyView stickyView;
         @Nullable
         private ICart<CT> cart;
+        @Nullable
+        private OnNavigationItemSelectCallback<NT> navigationItemSelectCallback;
+        private boolean isAutoNavBarItemScrollEnabled = false;
 
         public Config<IT, NT, CT> setNavigator(@Nullable INavigationBar navigationBar, @Nullable INavigationFactory<NT> navigationFactory) {
             this.navigationBar = navigationBar;
@@ -156,7 +182,16 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
             this.cart = cart;
             return this;
         }
+
+        public Config<IT, NT, CT> setNavigationCallback(@Nullable OnNavigationItemSelectCallback<NT> navigationItemSelectCallback) {
+            this.navigationItemSelectCallback = navigationItemSelectCallback;
+            return this;
+        }
+
+        public Config<IT, NT, CT> enableAutoNavBarScroll(boolean enable) {
+            this.isAutoNavBarItemScrollEnabled = enable;
+            return this;
+        }
+
     }
-
-
 }

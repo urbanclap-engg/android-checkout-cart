@@ -21,9 +21,7 @@ public class MarketUtils {
     }
 
     public static RecyclerView getDefaultRecycler(@NonNull Context context) {
-        RecyclerView recyclerView = new RecyclerView(context);
-//        recyclerView.setBackgroundColor(Color.WHITE);
-        return recyclerView;
+        return new RecyclerView(context);
     }
 
     public static INavigationBar getDefaultHorizontalNavigationBar(@NonNull Context context) {

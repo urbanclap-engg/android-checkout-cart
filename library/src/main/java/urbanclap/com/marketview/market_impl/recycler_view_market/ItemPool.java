@@ -66,6 +66,10 @@ class ItemPool<T> {
         return containsFirst(sectionId) != -1;
     }
 
+    String getSectionIdAt(int pos) {
+        return itemPoolObjectList.get(pos).getSectionId();
+    }
+
     @NonNull
     List<ItemData<T>> getItemDataList() {
         List<ItemData<T>> itemDataList = new ArrayList<>();

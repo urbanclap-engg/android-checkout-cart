@@ -10,6 +10,7 @@ import android.view.ViewGroup;
  */
 
 
+@SuppressWarnings("unused")
 public interface INavigationBar {
     void addView(@NonNull NavigationItemView navigationItemView);
 
@@ -22,4 +23,6 @@ public interface INavigationBar {
     void clear();
 
     ViewGroup getView();
+
+    void selectViewAt(int pos);
 }

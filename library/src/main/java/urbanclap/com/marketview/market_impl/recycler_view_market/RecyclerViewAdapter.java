@@ -42,6 +42,12 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
         super.onAttachedToRecyclerView(recyclerView);
         final LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            String firstCompletelyVisibleSection = "";
+            String firstVisibleSection = "";
+            String lastCompletelyVisibleSection = "";
+            String lastVisibleSection = "";
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -87,6 +93,30 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
                             lastVisiblePos,
                             findItemAtPos(lastVisiblePos)
                     );
+
+                    String id = findSectionAtPos(firstCompletelyVisiblePos);
+                    if (!(id.equals(firstCompletelyVisibleSection))) {
+                        firstCompletelyVisibleSection = id;
+                        recyclerViewScrollCallbacks.firstCompletelyVisibleSection(id);
+                    }
+
+                    id = findSectionAtPos(firstVisiblePos);
+                    if (!(id.equals(firstVisibleSection))) {
+                        firstVisibleSection = id;
+                        recyclerViewScrollCallbacks.firstVisibleSection(id);
+                    }
+
+                    id = findSectionAtPos(lastCompletelyVisiblePos);
+                    if (!(id.equals(lastCompletelyVisibleSection))) {
+                        lastCompletelyVisibleSection = id;
+                        recyclerViewScrollCallbacks.lastCompletelyVisibleSection(id);
+                    }
+
+                    id = findSectionAtPos(lastVisiblePos);
+                    if (!(id.equals(lastVisibleSection))) {
+                        lastVisibleSection = id;
+                        recyclerViewScrollCallbacks.lastVisibleSection(id);
+                    }
                 }
             }
         });
@@ -120,11 +150,14 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
         return position >= 0 && position < itemPool.getItemDataList().size() ? position : -1;
     }
 
-    @Nullable
+    @NonNull
     private String findItemAtPos(int position) {
-        if (position == -1)
-            return null;
-        return itemPool.getItemDataList().get(position).getUUID();
+        return position != -1 ? itemPool.getItemDataList().get(position).getUUID() : "";
+    }
+
+    @NonNull
+    private String findSectionAtPos(int position) {
+        return position != -1 ? itemPool.getSectionIdAt(position) : "";
     }
 
     void setScrollCallback(@Nullable ScrollCallback scrollCallback) {
