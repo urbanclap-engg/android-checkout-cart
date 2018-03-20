@@ -83,11 +83,21 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
             @Override
             public void onScrollPosition(int pos) {
                 stickyView.setStickyView(stickyManager.getStickyView(pos));
+            }
+        };
+        adapter.addScrollCallback(callback);
+    }
+
+    @Override
+    protected void initNavigationManagement() {
+        RecyclerViewAdapter.ScrollCallback callback = new RecyclerViewAdapter.ScrollCallback() {
+            @Override
+            public void onScrollPosition(int pos) {
                 if (navigationBar != null && isAutoNavBarItemScrollEnabled)
                     navigationBar.selectViewAt(pos);
             }
         };
-        adapter.setScrollCallback(callback);
+        adapter.addScrollCallback(callback);
     }
 
     @Override

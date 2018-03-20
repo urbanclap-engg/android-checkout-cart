@@ -62,8 +62,9 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
     private void initManagement() {
         initSectionsManager();
-        initNavigationManagement();
         initStickyManager();
+        initNavigationManagement();
+        navigationManagement();
     }
 
     @NonNull
@@ -82,7 +83,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         return routables;
     }
 
-    protected void initNavigationManagement() {
+    protected void navigationManagement() {
         if (navigationBar == null || navigationFactory == null)
             return;
         navigationBar.clear();
@@ -103,7 +104,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
     protected void addSections(@NonNull List<Section<IT>> sections) {
         handleAddSections(sections);
-        initNavigationManagement();
+        navigationManagement();
     }
 
     protected void removeSection(@NonNull String sectionId) {
@@ -112,7 +113,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
     protected void removeSections(@NonNull List<String> sectionIds) {
         handleRemoveSections(sectionIds);
-        initNavigationManagement();
+        navigationManagement();
     }
 
     public void bindMarketManager(@NonNull IMarketView marketView) {
@@ -129,14 +130,21 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
     public void updateNavigationBar(List<Routable<NT>> routables) {
         this.routables = routables;
-        initNavigationManagement();
+        navigationManagement();
+    }
+
+    @NonNull
+    public List<Routable<NT>> getRoutables() {
+        return this.routables;
     }
 
     protected abstract void initSectionsManager();
 
     protected abstract void initStickyManager();
 
-    public abstract void handleNavigateTo(@Nullable String id);
+    protected abstract void initNavigationManagement();
+
+    public abstract void handleNavigateTo(@NonNull String id);
 
     public abstract void handleAddSections(@NonNull List<Section<IT>> sectionList);
 

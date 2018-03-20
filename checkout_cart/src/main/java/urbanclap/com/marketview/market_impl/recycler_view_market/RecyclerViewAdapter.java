@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import urbanclap.com.marketview.frame_work.cart.CartCallback;
 
 /**
@@ -23,9 +26,9 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
     private RecyclerItemFactory<IT, CT> itemFactory;
     @NonNull
     private CartCallback<CT> cartCallback;
+    @NonNull
+    private List<ScrollCallback> scrollCallbackList;
 
-    @Nullable
-    private ScrollCallback scrollCallback;
     @Nullable
     private RecyclerViewScrollCallbacks recyclerViewScrollCallbacks;
 
@@ -35,6 +38,7 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
         this.itemPool = itemPool;
         this.itemFactory = itemFactory;
         this.cartCallback = cartCallback;
+        this.scrollCallbackList = new ArrayList<>();
     }
 
     @Override
@@ -58,7 +62,7 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (scrollCallback != null)
+                for (ScrollCallback scrollCallback : scrollCallbackList)
                     scrollCallback.onScrollPosition(layoutManager.findFirstVisibleItemPosition());
 
                 if (recyclerViewScrollCallbacks != null) {
@@ -160,8 +164,12 @@ class RecyclerViewAdapter<IT, CT> extends RecyclerView.Adapter<RecyclerItemViewH
         return position != -1 ? itemPool.getSectionIdAt(position) : "";
     }
 
-    void setScrollCallback(@Nullable ScrollCallback scrollCallback) {
-        this.scrollCallback = scrollCallback;
+    void addScrollCallback(@NonNull ScrollCallback scrollCallback) {
+        scrollCallbackList.add(scrollCallback);
+    }
+
+    void removeScrollCallback(@NonNull ScrollCallback scrollCallback) {
+        scrollCallbackList.remove(scrollCallback);
     }
 
     void setRecyclerViewScrollCallbacks(@Nullable RecyclerViewScrollCallbacks recyclerViewScrollCallbacks) {
