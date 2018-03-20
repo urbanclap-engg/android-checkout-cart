@@ -1,6 +1,7 @@
 package urbanclap.com.marketview.market_impl.recycler_view_market;
 
 import android.support.annotation.NonNull;
+import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,50 +17,53 @@ import urbanclap.com.marketview.frame_work.market.Section;
  */
 
 
-@SuppressWarnings("unused")
-public class ItemPool<T> {
+class ItemPool<T> {
     @NonNull
     private List<ItemPoolObject<T>> itemPoolObjectList;
 
     ItemPool(List<Section<T>> sections) {
         itemPoolObjectList = new ArrayList<>();
-        add(sections);
-    }
-
-    public void add(List<Section<T>> sections) {
         for (Section<T> section : sections)
             add(section);
     }
 
-    public void add(Section<T> section) {
+    Pair<Integer, Integer> add(Section<T> section) {
         int pos = containsFirst(section.getId());
         if (pos != -1) {
-            update(section, pos);
-            return;
+            throw new IllegalStateException(section.getId() + " Section already exists. Please use update instead");
         }
-        add(section, itemPoolObjectList.size());
+        return add(section, itemPoolObjectList.size());
     }
 
-    public void add(Section<T> section, int pos) {
+    Pair<Integer, Integer> add(Section<T> section, int pos) {
         String id = section.getId();
         Collections.reverse(section.getItemDataList());
         for (ItemData<T> itemData : section.getItemDataList()) {
             itemPoolObjectList.add(pos, new ItemPoolObject<>(id, itemData));
         }
+        return new Pair<>(pos, pos + section.getItemDataList().size());
     }
 
-    public void remove(@NonNull List<String> ids) {
-        for (String id : ids)
-            remove(id);
-    }
-
-    public void remove(@NonNull String id) {
+    Pair<Integer, Integer> remove(@NonNull String id) {
         List<ItemPoolObject<T>> listToRemove = new ArrayList<>();
-        for (ItemPoolObject<T> itemPoolObject : itemPoolObjectList) {
-            if (itemPoolObject.getSectionId().equals(id))
+        int startIndex = -1;
+        int endIndex = -1;
+
+        for (int i = 0, len = itemPoolObjectList.size(); i < len; i++) {
+            ItemPoolObject<T> itemPoolObject = itemPoolObjectList.get(i);
+            if (itemPoolObject.getSectionId().equals(id)) {
+                if (startIndex == -1)
+                    startIndex = i;
+                endIndex = i;
                 listToRemove.add(itemPoolObject);
+            }
         }
         itemPoolObjectList.removeAll(listToRemove);
+        return new Pair<>(startIndex, endIndex + 1);
+    }
+
+    boolean hasSection(@NonNull String sectionId) {
+        return containsFirst(sectionId) != -1;
     }
 
     @NonNull
@@ -82,10 +86,5 @@ public class ItemPool<T> {
                 return i;
         }
         return -1;
-    }
-
-    private void update(Section<T> section, int pos) {
-        remove(section.getId());
-        add(section, pos);
     }
 }

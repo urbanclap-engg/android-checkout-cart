@@ -53,6 +53,11 @@ public class NavigationHorizontalScroll extends HorizontalScrollView implements 
     }
 
     @Override
+    public void clear() {
+        linearLayout.removeAllViews();
+    }
+
+    @Override
     public ViewGroup getView() {
         return this;
     }

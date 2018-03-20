@@ -19,5 +19,7 @@ public interface INavigationBar {
 
     void removeView(int pos);
 
+    void clear();
+
     ViewGroup getView();
 }

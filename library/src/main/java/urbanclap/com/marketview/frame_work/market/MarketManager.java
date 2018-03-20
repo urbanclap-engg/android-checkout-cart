@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import urbanclap.com.marketview.frame_work.cart.ICart;
@@ -73,6 +74,7 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     protected void initNavigationManagement() {
         if (navigationBar == null || navigationFactory == null)
             return;
+        navigationBar.clear();
 
         List<Routable<NT>> routables = getRoutableItemList();
         for (Routable<NT> routable : routables) {
@@ -83,9 +85,22 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         }
     }
 
+    protected void addSection(@NonNull Section<IT> section) {
+        addSections(Collections.singletonList(section));
+    }
+
     protected void addSections(@NonNull List<Section<IT>> sections) {
-        for (Section<IT> section : sections)
-            addSection(section);
+        handleAddSections(sections);
+        initNavigationManagement();
+    }
+
+    protected void removeSection(@NonNull String sectionId) {
+        removeSections(Collections.singletonList(sectionId));
+    }
+
+    protected void removeSections(@NonNull List<String> sectionIds) {
+        handleRemoveSections(sectionIds);
+        initNavigationManagement();
     }
 
     public void bindMarketManager(@NonNull IMarketView marketView) {
@@ -100,9 +115,10 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
     @Override
     public abstract void navigateTo(@NonNull String id);
 
-    public abstract void addSection(@NonNull Section<IT> section);
 
-    public abstract boolean removeSection(@NonNull String sectionId);
+    public abstract void handleAddSections(@NonNull List<Section<IT>> sectionList);
+
+    public abstract void handleRemoveSections(@NonNull List<String> sectionIds);
 
     protected abstract void handleBindMarketManager(@NonNull IMarketView marketView);
 

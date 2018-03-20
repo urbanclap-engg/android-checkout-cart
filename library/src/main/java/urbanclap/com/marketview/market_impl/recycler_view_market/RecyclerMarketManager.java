@@ -7,8 +7,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 import urbanclap.com.marketview.frame_work.cart.CartCallback;
 import urbanclap.com.marketview.frame_work.market.MarketManager;
@@ -102,14 +105,25 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     }
 
     @Override
-    public void addSection(@NonNull Section<IT> section) {
-        // TODO: 13/Mar/18 @adnaan: add..
+    public void handleAddSections(@NonNull List<Section<IT>> sectionList) {
+        for (Section<IT> section : sectionList) {
+            if (itemPool.hasSection(section.getId())) {
+                Pair<Integer, Integer> removePair = itemPool.remove(section.getId());
+                adapter.notifyItemRangeRemoved(removePair.first, removePair.second - removePair.first);
+                Pair<Integer, Integer> addPair = itemPool.add(section, removePair.first);
+                adapter.notifyItemRangeInserted(addPair.first, addPair.second - addPair.first);
+            }
+            Pair<Integer, Integer> addPair = itemPool.add(section);
+            adapter.notifyItemRangeInserted(addPair.first, addPair.second - addPair.first);
+        }
     }
 
     @Override
-    public boolean removeSection(@NonNull String sectionId) {
-        // TODO: 13/Mar/18 @adnaan: todo...
-        return false;
+    public void handleRemoveSections(@NonNull List<String> sectionIds) {
+        for (String id : sectionIds) {
+            Pair<Integer, Integer> pair = itemPool.remove(id);
+            adapter.notifyItemRangeRemoved(pair.first, pair.second - pair.first);
+        }
     }
 
     @Override
