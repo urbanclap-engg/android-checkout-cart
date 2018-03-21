@@ -2,6 +2,7 @@ package urbanclap.com.marketviewsample.market;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemViewHolder;
 import urbanclap.com.marketview.utils.DefaultCartItem;
@@ -41,6 +42,7 @@ public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseIt
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(itemView.getContext(), "added to cart", Toast.LENGTH_SHORT).show();
                 increment(vm.id(), cartItem);
             }
         });

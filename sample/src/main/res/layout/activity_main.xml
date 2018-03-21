@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="urbanclap.com.marketviewsample.MainActivity">
+    tools:context="urbanclap.com.marketviewsample.main_screen.MainActivity">
 
     <urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketView
         android:id="@+id/market"

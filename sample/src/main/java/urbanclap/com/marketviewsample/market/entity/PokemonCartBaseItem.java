@@ -10,7 +10,7 @@ package urbanclap.com.marketviewsample.market.entity;
 public interface PokemonCartBaseItem {
 
     int TYPE_CART = 0x0;
-    int TYPE_SECTION = 0x1;
+    int TYPE_HEADER = 0x1;
 
     int getCartItemType();
 

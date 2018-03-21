@@ -19,7 +19,7 @@ public class PokemonSectionItem implements PokemonCartBaseItem, Routable<String>
 
     @Override
     public int getCartItemType() {
-        return TYPE_SECTION;
+        return TYPE_HEADER;
     }
 
     @Override

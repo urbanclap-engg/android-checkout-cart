@@ -31,7 +31,7 @@ public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, Defaul
                         .from(context)
                         .inflate(R.layout.item_layout, parent, false));
 
-            case PokemonCartBaseItem.TYPE_SECTION:
+            case PokemonCartBaseItem.TYPE_HEADER:
                 return new SectionItemViewHolder(LayoutInflater
                         .from(context)
                         .inflate(R.layout.item_section_layout, parent, false));
