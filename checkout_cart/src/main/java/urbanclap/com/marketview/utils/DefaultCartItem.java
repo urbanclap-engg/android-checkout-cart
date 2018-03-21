@@ -1,4 +1,4 @@
-package urbanclap.com.marketview.frame_work.cart;
+package urbanclap.com.marketview.utils;
 
 import android.support.annotation.NonNull;
 
@@ -9,15 +9,18 @@ import android.support.annotation.NonNull;
  */
 
 
-public class CartItem<I> {
+public class DefaultCartItem<I> {
     private int quantity;
+    private double price;
     @NonNull
     private I item;
 
-    public CartItem(int quantity,
-                    @NonNull I item) {
+    public DefaultCartItem(int quantity,
+                           double price,
+                           @NonNull I item) {
 
         this.quantity = quantity;
+        this.price = price;
         this.item = item;
     }
 
@@ -27,6 +30,14 @@ public class CartItem<I> {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public void incrementQuantity() {

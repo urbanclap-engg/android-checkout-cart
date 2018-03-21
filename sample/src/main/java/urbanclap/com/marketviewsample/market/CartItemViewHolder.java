@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemViewHolder;
+import urbanclap.com.marketview.utils.DefaultCartItem;
 import urbanclap.com.marketviewsample.R;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
@@ -16,7 +17,7 @@ import urbanclap.com.marketviewsample.model.PokemonItem;
  */
 
 
-public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, PokemonItem> {
+public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, DefaultCartItem<PokemonItem>> {
 
     private TextView tvId;
     private TextView tvName;
@@ -35,10 +36,12 @@ public class CartItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseIt
         tvId.setText("# " + viewModel.getUuid());
         tvName.setText(viewModel.getName());
         tvDesc.setText(viewModel.getDescription());
+        PokemonItem pokemonItem = new PokemonItem(viewModel.getUuid(), viewModel.getName(), viewModel.getDescription());
+        final DefaultCartItem<PokemonItem> cartItem = new DefaultCartItem<>(1, 5.0, pokemonItem);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                increment(vm.id(), new PokemonItem(Integer.parseInt(viewModel.id()), viewModel.getName(), viewModel.getDescription()));
+                increment(vm.id(), cartItem);
             }
         });
     }

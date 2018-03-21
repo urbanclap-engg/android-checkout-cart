@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemViewHolder;
+import urbanclap.com.marketview.utils.DefaultCartItem;
 import urbanclap.com.marketviewsample.R;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonSectionItem;
@@ -16,7 +17,7 @@ import urbanclap.com.marketviewsample.model.PokemonItem;
  */
 
 
-public class SectionItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, PokemonItem> {
+public class SectionItemViewHolder extends RecyclerItemViewHolder<PokemonCartBaseItem, DefaultCartItem<PokemonItem>> {
 
     private TextView tvTitle;
 

@@ -14,7 +14,7 @@ import java.util.List;
 public interface ICart<I> {
 
     @NonNull
-    List<CartItem<I>> getItems();
+    List<I> getItems();
 
     double getTotalPrice();
 
@@ -24,13 +24,13 @@ public interface ICart<I> {
 
     double getPrice(@NonNull String uuid);
 
-    void increment(@NonNull String uuid, @NonNull I item);
+    boolean increment(@NonNull String uuid, @NonNull I item);
 
-    void decrement(@NonNull String uuid);
+    boolean decrement(@NonNull String uuid);
 
-    CartItem<I> getItem(@NonNull String uuid);
+    I getItem(@NonNull String uuid);
 
-    void remove(@NonNull String uuid);
+    I remove(@NonNull String uuid);
 
     void clear();
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemFactory;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerItemViewHolder;
+import urbanclap.com.marketview.utils.DefaultCartItem;
 import urbanclap.com.marketviewsample.R;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.model.PokemonItem;
@@ -18,12 +19,12 @@ import urbanclap.com.marketviewsample.model.PokemonItem;
  */
 
 
-public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, PokemonItem> {
+public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, DefaultCartItem<PokemonItem>> {
 
     @Override
-    public RecyclerItemViewHolder<PokemonCartBaseItem, PokemonItem> createViewHolder(@NonNull Context context,
-                                                                                     @NonNull ViewGroup parent,
-                                                                                     int viewType) {
+    public RecyclerItemViewHolder<PokemonCartBaseItem, DefaultCartItem<PokemonItem>> createViewHolder(@NonNull Context context,
+                                                                                                      @NonNull ViewGroup parent,
+                                                                                                      int viewType) {
         switch (viewType) {
             case PokemonCartBaseItem.TYPE_CART:
                 return new CartItemViewHolder(LayoutInflater

@@ -25,11 +25,12 @@ import urbanclap.com.marketview.frame_work.market.Section;
 import urbanclap.com.marketview.frame_work.sticky.IStickyViewItem;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketManager;
 import urbanclap.com.marketview.market_impl.recycler_view_market.RecyclerMarketView;
+import urbanclap.com.marketview.utils.DefaultCart;
+import urbanclap.com.marketview.utils.DefaultCartItem;
 import urbanclap.com.marketview.utils.MarketUtils;
 import urbanclap.com.marketviewsample.market.CartItem;
 import urbanclap.com.marketviewsample.market.ItemFactory;
 import urbanclap.com.marketviewsample.market.NavigationItemFactory;
-import urbanclap.com.marketviewsample.market.PokemonCart;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartBaseItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonCartItem;
 import urbanclap.com.marketviewsample.market.entity.PokemonSectionItem;
@@ -90,17 +91,16 @@ public class MainActivity extends AppCompatActivity {
             sections.add(section);
         }
 
-
-        MarketManager.Config<PokemonCartBaseItem, String, PokemonItem> config = new MarketManager.Config<>();
+        MarketManager.Config<PokemonCartBaseItem, String, DefaultCartItem<PokemonItem>> config = new MarketManager.Config<>();
         config.setSections(sections)
-                .setCart(new PokemonCart())
+                .setCart(new DefaultCart<PokemonItem>())
                 .setSticky(MarketUtils.getDefaultStickyView(this))
                 .setNavigator(
                         MarketUtils.getDefaultHorizontalNavigationBar(this),
                         new NavigationItemFactory()
                 );
 
-        MarketManager<PokemonCartBaseItem, String, PokemonItem> marketManager =
+        MarketManager<PokemonCartBaseItem, String, DefaultCartItem<PokemonItem>> marketManager =
                 new RecyclerMarketManager<>(this, config, new ItemFactory());
 
         marketView.bindMarketManager(marketManager);
