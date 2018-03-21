@@ -16,10 +16,10 @@ import urbanclap.com.marketview.frame_work.cart.ICart;
  */
 
 
-public class DefaultCart<I> implements ICart<DefaultCartItem<I>> {
+public class DefaultCart<I extends DefaultCartItem> implements ICart<I> {
 
     @NonNull
-    protected Map<String, DefaultCartItem<I>> cartItems;
+    protected Map<String, I> cartItems;
 
     public DefaultCart() {
         this.cartItems = new HashMap<>();
@@ -27,15 +27,15 @@ public class DefaultCart<I> implements ICart<DefaultCartItem<I>> {
 
     @NonNull
     @Override
-    public List<DefaultCartItem<I>> getItems() {
+    public List<I> getItems() {
         return new ArrayList<>(cartItems.values());
     }
 
     @Override
     public double getTotalPrice() {
         double totalPrice = 0;
-        for (Map.Entry<String, DefaultCartItem<I>> entry : cartItems.entrySet()) {
-            DefaultCartItem<I> itr = entry.getValue();
+        for (Map.Entry<String, I> entry : cartItems.entrySet()) {
+            I itr = entry.getValue();
             totalPrice += (itr.getQuantity() * itr.getPrice());
         }
         return totalPrice;
@@ -44,8 +44,8 @@ public class DefaultCart<I> implements ICart<DefaultCartItem<I>> {
     @Override
     public long getTotalQuantity() {
         int totalQuantity = 0;
-        for (Map.Entry<String, DefaultCartItem<I>> entry : cartItems.entrySet()) {
-            DefaultCartItem<I> itr = entry.getValue();
+        for (Map.Entry<String, I> entry : cartItems.entrySet()) {
+            I itr = entry.getValue();
             totalQuantity += itr.getQuantity();
         }
         return totalQuantity;
@@ -58,12 +58,12 @@ public class DefaultCart<I> implements ICart<DefaultCartItem<I>> {
 
     @Override
     public double getPrice(@NonNull String uuid) {
-        DefaultCartItem<I> cartItem = getItem(uuid);
+        I cartItem = getItem(uuid);
         return cartItem.getQuantity() * cartItem.getPrice();
     }
 
     @Override
-    public boolean increment(@NonNull String uuid, @NonNull DefaultCartItem<I> item) {
+    public boolean increment(@NonNull String uuid, @NonNull I item) {
         if (cartItems.containsKey(uuid))
             cartItems.get(uuid).incrementQuantity();
         else
@@ -78,12 +78,12 @@ public class DefaultCart<I> implements ICart<DefaultCartItem<I>> {
     }
 
     @Override
-    public DefaultCartItem<I> getItem(@NonNull String uuid) {
+    public I getItem(@NonNull String uuid) {
         return cartItems.get(uuid);
     }
 
     @Override
-    public DefaultCartItem<I> remove(@NonNull String uuid) {
+    public I remove(@NonNull String uuid) {
         return cartItems.remove(uuid);
     }
 

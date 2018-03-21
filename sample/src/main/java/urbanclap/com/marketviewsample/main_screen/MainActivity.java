@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         MarketManager.Config<PokemonCartBaseItem, String, DefaultCartItem<PokemonItem>> config =
                 new MarketManager.Config<>();
 
-        config.setCart(new DefaultCart<PokemonItem>())
+        config.setCart(new DefaultCart<DefaultCartItem<PokemonItem>>())
                 .setSections(sections)
                 .setSticky(MarketUtils.getDefaultStickyView(this))
                 .setNavigator(
