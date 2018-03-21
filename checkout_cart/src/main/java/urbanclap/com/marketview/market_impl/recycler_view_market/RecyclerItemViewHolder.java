@@ -31,13 +31,11 @@ public abstract class RecyclerItemViewHolder<T, CT> extends RecyclerView.ViewHol
         this.cartCallback = cartCallback;
     }
 
-    protected void increment(@NonNull String uuid, CT item) {
-        if (cartCallback != null)
-            cartCallback.incrementInCart(uuid, item);
+    protected boolean increment(@NonNull String uuid, CT item) {
+        return cartCallback != null && cartCallback.incrementInCart(uuid, item);
     }
 
-    protected void decrement(@NonNull String uuid) {
-        if (cartCallback != null)
-            cartCallback.decrementInCart(uuid);
+    protected boolean decrement(@NonNull String uuid) {
+        return cartCallback != null && cartCallback.decrementInCart(uuid);
     }
 }

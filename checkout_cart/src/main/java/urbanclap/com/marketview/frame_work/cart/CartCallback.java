@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 
 
 public interface CartCallback<T> {
-    void incrementInCart(@NonNull String uuid, T item);
+    boolean incrementInCart(@NonNull String uuid, T item);
 
-    void decrementInCart(@NonNull String uuid);
+    boolean decrementInCart(@NonNull String uuid);
 }

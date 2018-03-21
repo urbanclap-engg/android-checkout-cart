@@ -148,15 +148,13 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     }
 
     @Override
-    public void incrementInCart(@NonNull String uuid, CT item) {
-        if (cart != null)
-            cart.increment(uuid, item);
+    public boolean incrementInCart(@NonNull String uuid, CT item) {
+        return cart != null && cart.increment(uuid, item);
     }
 
     @Override
-    public void decrementInCart(@NonNull String uuid) {
-        if (cart != null)
-            cart.decrement(uuid);
+    public boolean decrementInCart(@NonNull String uuid) {
+        return cart != null && cart.decrement(uuid);
     }
 
     public void setScrollCallbacks(@Nullable RecyclerViewScrollCallbacks scrollCallbacks) {
