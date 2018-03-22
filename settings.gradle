@@ -1,1 +1,1 @@
-include ':sample', ':checkout_cart'
+include ':sample', ':checkout-cart'
