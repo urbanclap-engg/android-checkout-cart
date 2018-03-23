@@ -149,17 +149,17 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     }
 
     @Override
-    protected boolean hasSection(@NonNull String sectionId) {
+    public boolean hasSection(@NonNull String sectionId) {
         return itemPool.hasSection(sectionId);
     }
 
     @Override
-    protected boolean hasItem(@NonNull String sectionId, @NonNull String itemId) {
+    public boolean hasItem(@NonNull String sectionId, @NonNull String itemId) {
         return itemPool.hasItem(sectionId, itemId);
     }
 
     @Override
-    protected void updateItem(@NonNull String sectionId, ItemData<IT> item) {
+    public void updateItem(@NonNull String sectionId, ItemData<IT> item) {
         int pos = itemPool.updateItem(sectionId, item);
         if (pos >= 0 && pos < itemPool.size())
             adapter.notifyItemChanged(pos);

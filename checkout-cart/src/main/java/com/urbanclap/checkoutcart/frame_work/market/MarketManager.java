@@ -147,13 +147,13 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
     public abstract void handleRemoveSections(@NonNull List<String> sectionIds);
 
+    public abstract boolean hasSection(@NonNull String sectionId);
+
+    public abstract boolean hasItem(@NonNull String sectionId, @NonNull String itemId);
+
+    public abstract void updateItem(@NonNull String sectionId, ItemData<IT> item);
+
     protected abstract void handleBindMarketManager(@NonNull IMarketView marketView);
-
-    protected abstract boolean hasSection(@NonNull String sectionId);
-
-    protected abstract boolean hasItem(@NonNull String sectionId, @NonNull String itemId);
-
-    protected abstract void updateItem(@NonNull String sectionId, ItemData<IT> item);
 
 
     @SuppressWarnings("UnusedReturnValue")
