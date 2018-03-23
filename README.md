@@ -3,6 +3,30 @@
 
 This library will help developers create fully customised checkout cart screen for their own use case.
 
+##Settings
+---
+For maven :
+```xml
+<dependency>
+  <groupId>com.urbanclap</groupId>
+  <artifactId>checkout-cart</artifactId>
+  <version>0.1.0</version>
+  <type>pom</type>
+</dependency>
+```
+
+For gradle:
+```groovy
+compile 'com.urbanclap:checkout-cart:0.1.0'
+```
+
+For Ivy:
+```xml
+<dependency org='com.urbanclap' name='checkout-cart' rev='0.1.0'>
+  <artifact name='checkout-cart' ext='pom' ></artifact>
+</dependency>
+```
+
 ##Components
 
 ###Section
