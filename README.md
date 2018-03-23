@@ -1,9 +1,9 @@
-#Checkout Cart
+# Checkout Cart
 ----
 
 This library will help developers create fully customised checkout cart screen for their own use case.
 
-##Settings
+## Settings
 ---
 For maven :
 ```xml
@@ -27,21 +27,21 @@ For Ivy:
 </dependency>
 ```
 
-##Components
+## Components
 
-###Section
+### Section
 ---
 Checkout - cart accepts a list of section. Section itself contains an id for its unique identification, list of items and an optional sticky view. If a sticky view container is passed in the config this view will be rendered in the sticky view container when this section is visible.
 
 `Section(@NonNull String id, @NonNull List<ItemData<T>> itemDataList)`
 
-###Market Manager
+### Market Manager
 ---
 Library provides the above basic components and interaction between them is handled by `MarketManager`.
 At this point of time library only supports one variant of market manager : `RecyclerMarketManager` which shows the item list in a recycler view. 
 `MarketManager` receives a set of configs (explained below) and according to which it will create and manage all the components.
 
-###Config
+### Config
 ---
 This handles the configuration data for market manager. It receives list of sections in a constructor and has following configurations:
 
@@ -61,7 +61,7 @@ This library in total has 4 ui/functional components.
 * Cart
 * Item List
 
-####Navigation Bar
+#### Navigation Bar
 ----
 This is a component where shortcut to a particular item in the item-list.
 To enable this component client need to do 3 things.
@@ -76,25 +76,25 @@ For easier usage library provides a default navigation bar container view : `Nav
 
 Library also provides `OnNavigationItemSelectCallback` interface to give client callbacks when a particular routable item was clicked via a function - `void onItemSelect(@NonNull String routeId, @NonNull List<Routable<T>> routable)`
 
-####Sticky Section
+#### Sticky Section
 ----
 This is a component where if client wants, client can have a sticky header for a specific section. Here again client can define the container for their sticky section container which must implement `IStickyView`. All those sections which has a sticky view will then have that view displayed in the Sticky section by the library.
 
 For easier usage library provides a default sticky section container view : `StickyFrameLayout` which can be accessed via `MarketUtils` class.
 
 
-####Cart
+#### Cart
 ---
 This components manages functional part of the checkout cart. Client can create their own implementation of the cart by implementing `ICart`.  
 
 For easier usage library provides default cart `DefaultCart` which can be accessed via `MarketUtils` class.
 
 
-####Item List
+#### Item List
 ---
 This is the component where all the sections along with its items are visible. To display this client needs to pass a container view which must implement `IMarketView`. 
 
-###Generics
+### Generics
 ---
 This entire library is generic. This library needs three models :
 1. view model for the item to be displayed as the list.
@@ -108,10 +108,10 @@ In the library client needs to define this generic while defining `Config` and `
 If any of the model is not needed we can use `Void`.
 
 
-##Usage
+## Usage
 ---
 
-###Creating Navigation Bar UI Component
+### Creating Navigation Bar UI Component
 
 Client will have to create view holder class(es) for the navigation. It is generic and client can have different kinds of view holders for different types. The view holder must extend `NavigationItemViewHolder<NT>`. Here `<NT>` is the navigation template generic model. In the example `String` will be used for `<NT>` .
 
@@ -161,7 +161,7 @@ Now if client wants client can create custom navigation bar container view which
 config.setNavigator(MarketUtils.getDefaultHorizontalNavigationBar(this),new NavigationItemFactory());
 ```
 
-###Creating Sticky Section UI Component
+### Creating Sticky Section UI Component
 ---
 To create sticky component client need to pass sticky view container to the config. The client can implement its own custom sticky view by implementing `IStickyView` or using the default provided by the library. To set it up just add in to the config:
 ```java
@@ -181,7 +181,7 @@ section = new Section<>(itr.getUuid(), itemDataList, new IStickyViewItem() {
             });
 ```
 
-###Creating Cart Functional Component
+### Creating Cart Functional Component
 ---
 Client can create its own custom cart by implementing the interface `ICart<CT>`. Here `<CT>` is the cart template generic model. Client can also use the default cart provided by the library. In the case if client uses default client then client template model will be of type `CartItem<T>` where cart item encapsulates the cart data model along with fields like quantity and price. Here `<T>` is the data model to be stored inside. To set it up client needs to pass the cart to the config.
 ```java
@@ -190,13 +190,13 @@ config.setCart(new DefaultCart<DefaultCartItem<PokemonItem>>());
 
 To increment or decrement the quantity of an item inside the cart, client needs to call `increment(@NonNull String uuid, CT item);` or `decrement(@NonNull String uuid, CT item);` respectively. It returns if the transaction was successful or not.
 
-###Creating List Item UI Components
+### Creating List Item UI Components
 ---
 For list item components first client needs to create view holders for them. Client needs to implement `IItemViewHolder<IT,CT>` in the view holders. Here `<IT>` is the item template view model and `<CT>` is the cart template data model. Then client needs to create factory which the library will use to create these view model. Clients needs to create a factory by implementing `IItemFactory<IT, CT, K extends IItemViewHolder<IT, CT>>`. 
 
 This is the abstract part of the library which client can use to create its own market manager in case `RecyclerMarketManager` doesn't solve their use case. For majority of use case client can use `RecyclerMarketManager`.
 
-####Setting up `RecyclerMarketManager`
+#### Setting up `RecyclerMarketManager`
 
 As mentioned above client need to create a view holder for each items which will extend `RecyclerItemViewHolder<IT, CT>`. Here client will have to give definition to the function `public void onBindView(final IT vm)`. Here client can call `increment` or `decrement` function in case client have set up the cart.
 
@@ -307,10 +307,7 @@ In the xml :
 </FrameLayout>
 ```
 
-
-
-
-##License
+## License
 MIT License
 
 Copyright (c) 2018 adnaan1703
