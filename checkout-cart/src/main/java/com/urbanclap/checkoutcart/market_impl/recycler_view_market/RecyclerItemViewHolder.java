@@ -17,8 +17,8 @@ import com.urbanclap.checkoutcart.frame_work.market.interfaces.IItemViewHolder;
 
 
 @SuppressWarnings("unused")
-public abstract class RecyclerItemViewHolder<T, CT> extends RecyclerView.ViewHolder
-        implements IItemViewHolder<T> {
+public abstract class RecyclerItemViewHolder<IT, CT> extends RecyclerView.ViewHolder
+        implements IItemViewHolder<IT, CT> {
 
     @Nullable
     private CartCallback<CT> cartCallback;
@@ -31,11 +31,13 @@ public abstract class RecyclerItemViewHolder<T, CT> extends RecyclerView.ViewHol
         this.cartCallback = cartCallback;
     }
 
-    protected boolean increment(@NonNull String uuid, CT item) {
+    @Override
+    public boolean increment(@NonNull String uuid, CT item) {
         return cartCallback != null && cartCallback.incrementInCart(uuid, item);
     }
 
-    protected boolean decrement(@NonNull String uuid) {
+    @Override
+    public boolean decrement(@NonNull String uuid) {
         return cartCallback != null && cartCallback.decrementInCart(uuid);
     }
 }

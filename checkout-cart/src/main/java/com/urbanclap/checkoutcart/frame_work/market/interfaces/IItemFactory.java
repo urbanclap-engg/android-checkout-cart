@@ -11,6 +11,6 @@ import android.view.ViewGroup;
  */
 
 
-public interface IItemFactory<T, K extends IItemViewHolder<T>> {
+public interface IItemFactory<IT, CT, K extends IItemViewHolder<IT, CT>> {
     K createViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType);
 }

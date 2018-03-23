@@ -11,14 +11,15 @@ import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import com.urbanclap.checkoutcart.frame_work.cart.CartCallback;
+import com.urbanclap.checkoutcart.frame_work.market.ItemData;
 import com.urbanclap.checkoutcart.frame_work.market.MarketManager;
 import com.urbanclap.checkoutcart.frame_work.market.Section;
 import com.urbanclap.checkoutcart.frame_work.market.interfaces.IMarketView;
 import com.urbanclap.checkoutcart.frame_work.sticky.IStickyManager;
 import com.urbanclap.checkoutcart.utils.MarketUtils;
+
+import java.util.List;
 
 
 /**
@@ -145,6 +146,23 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
         marketView.addNavigationBar(navigationBarView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         marketView.addStickyViewHolder(stickySectionView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         marketView.addIMarketSectionView(recyclerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    @Override
+    protected boolean hasSection(@NonNull String sectionId) {
+        return itemPool.hasSection(sectionId);
+    }
+
+    @Override
+    protected boolean hasItem(@NonNull String sectionId, @NonNull String itemId) {
+        return itemPool.hasItem(sectionId, itemId);
+    }
+
+    @Override
+    protected void updateItem(@NonNull String sectionId, ItemData<IT> item) {
+        int pos = itemPool.updateItem(sectionId, item);
+        if (pos >= 0 && pos < itemPool.size())
+            adapter.notifyItemChanged(pos);
     }
 
     @Override

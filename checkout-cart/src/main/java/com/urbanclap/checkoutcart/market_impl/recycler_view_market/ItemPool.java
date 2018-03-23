@@ -3,12 +3,12 @@ package com.urbanclap.checkoutcart.market_impl.recycler_view_market;
 import android.support.annotation.NonNull;
 import android.util.Pair;
 
+import com.urbanclap.checkoutcart.frame_work.market.ItemData;
+import com.urbanclap.checkoutcart.frame_work.market.Section;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import com.urbanclap.checkoutcart.frame_work.market.ItemData;
-import com.urbanclap.checkoutcart.frame_work.market.Section;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@com.urbanclap>
@@ -90,5 +90,41 @@ class ItemPool<T> {
                 return i;
         }
         return -1;
+    }
+
+    int updateItem(@NonNull String sectionId, @NonNull ItemData<T> item) throws IllegalArgumentException {
+        if (!hasSection(sectionId))
+            throw new IllegalArgumentException("Section id not found");
+
+        int pos = -1;
+
+        for (int i = 0, len = itemPoolObjectList.size(); i < len; i++) {
+            ItemPoolObject<T> itemPoolObject = itemPoolObjectList.get(i);
+            if (itemPoolObject.getSectionId().equals(sectionId)
+                    && itemPoolObject.getItemData().getUUID().equals(item.getUUID())) {
+                pos = i;
+                break;
+            }
+        }
+
+        if (pos == -1)
+            throw new IllegalArgumentException("Item not found");
+
+        itemPoolObjectList.remove(pos);
+        itemPoolObjectList.add(pos, new ItemPoolObject<>(sectionId, item));
+        return pos;
+    }
+
+    int size() {
+        return itemPoolObjectList.size();
+    }
+
+    boolean hasItem(@NonNull String sectionId, @NonNull String itemId) {
+        for (ItemPoolObject<T> itemPoolObject : itemPoolObjectList) {
+            if (itemPoolObject.getSectionId().equals(sectionId)
+                    && itemPoolObject.getItemData().getUUID().equals(itemId))
+                return true;
+        }
+        return false;
     }
 }

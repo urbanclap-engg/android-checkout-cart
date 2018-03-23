@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import java.util.List;
-
 import com.urbanclap.checkoutcart.frame_work.market.MarketManager;
 import com.urbanclap.checkoutcart.frame_work.market.Section;
 import com.urbanclap.checkoutcart.market_impl.recycler_view_market.RecyclerMarketManager;
@@ -19,6 +17,8 @@ import com.urbanclap.checkoutcartsample.market.ItemFactory;
 import com.urbanclap.checkoutcartsample.market.NavigationItemFactory;
 import com.urbanclap.checkoutcartsample.market.entity.PokemonCartBaseItem;
 import com.urbanclap.checkoutcartsample.model.PokemonItem;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -42,10 +42,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void showSections(@NonNull List<Section<PokemonCartBaseItem>> sections) {
         MarketManager.Config<PokemonCartBaseItem, String, DefaultCartItem<PokemonItem>> config =
-                new MarketManager.Config<>();
+                new MarketManager.Config<>(sections);
 
         config.setCart(new DefaultCart<DefaultCartItem<PokemonItem>>())
-                .setSections(sections)
                 .setSticky(MarketUtils.getDefaultStickyView(this))
                 .setNavigator(
                         MarketUtils.getDefaultHorizontalNavigationBar(this),

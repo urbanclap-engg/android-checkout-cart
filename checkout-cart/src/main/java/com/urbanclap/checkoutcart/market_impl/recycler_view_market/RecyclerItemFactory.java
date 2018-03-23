@@ -15,7 +15,7 @@ import com.urbanclap.checkoutcart.frame_work.market.interfaces.IItemFactory;
  */
 
 
-public abstract class RecyclerItemFactory<T, CT> implements IItemFactory<T, RecyclerItemViewHolder<T, CT>> {
+public abstract class RecyclerItemFactory<T, CT> implements IItemFactory<T, CT, RecyclerItemViewHolder<T, CT>> {
 
     RecyclerItemViewHolder<T, CT> create(@NonNull Context context,
                                          @NonNull ViewGroup parent,

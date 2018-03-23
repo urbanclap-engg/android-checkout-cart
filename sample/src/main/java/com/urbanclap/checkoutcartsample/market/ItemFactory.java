@@ -20,7 +20,6 @@ import com.urbanclap.checkoutcartsample.model.PokemonItem;
 
 
 public class ItemFactory extends RecyclerItemFactory<PokemonCartBaseItem, DefaultCartItem<PokemonItem>> {
-
     @Override
     public RecyclerItemViewHolder<PokemonCartBaseItem, DefaultCartItem<PokemonItem>> createViewHolder(@NonNull Context context,
                                                                                                       @NonNull ViewGroup parent,

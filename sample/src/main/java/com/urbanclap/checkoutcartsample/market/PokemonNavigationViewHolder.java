@@ -25,7 +25,6 @@ public class PokemonNavigationViewHolder extends NavigationItemViewHolder<String
 
     @Override
     public void onBind(String viewModel) {
-        // TODO: 15/Mar/18 @adnaan: pass view as parameter.. change the name to onViewInflated
         NavigationItemView itemView = getNavigationItemView();
         TextView tvTitle = itemView.findViewById(R.id.tv_nav);
         itemView.setOnClickListener(new View.OnClickListener() {

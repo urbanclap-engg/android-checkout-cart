@@ -3,10 +3,6 @@ package com.urbanclap.checkoutcart.frame_work.market;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.urbanclap.checkoutcart.frame_work.cart.ICart;
 import com.urbanclap.checkoutcart.frame_work.market.interfaces.IMarketView;
 import com.urbanclap.checkoutcart.frame_work.navigation_bar.INavigationBar;
@@ -16,6 +12,10 @@ import com.urbanclap.checkoutcart.frame_work.navigation_bar.NavigationItemViewHo
 import com.urbanclap.checkoutcart.frame_work.navigation_bar.OnNavigationItemSelectCallback;
 import com.urbanclap.checkoutcart.frame_work.navigation_bar.Routable;
 import com.urbanclap.checkoutcart.frame_work.sticky.IStickyView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@com.urbanclap>
@@ -46,9 +46,6 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
 
     public MarketManager(@NonNull Config<IT, NT, CT> config) {
-
-        if (config.sections == null)
-            throw new IllegalStateException("Sections cannot be null for the Market Manager initialisation");
 
         this.sections = config.sections;
         this.routables = generateRoutableList();
@@ -152,16 +149,22 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
 
     protected abstract void handleBindMarketManager(@NonNull IMarketView marketView);
 
+    protected abstract boolean hasSection(@NonNull String sectionId);
+
+    protected abstract boolean hasItem(@NonNull String sectionId, @NonNull String itemId);
+
+    protected abstract void updateItem(@NonNull String sectionId, ItemData<IT> item);
+
 
     @SuppressWarnings("UnusedReturnValue")
     public static class Config<IT, NT, CT> {
 
+        @NonNull
+        private List<Section<IT>> sections;
         @Nullable
         private INavigationBar navigationBar;
         @Nullable
         private INavigationFactory<NT> navigationFactory;
-        @Nullable
-        private List<Section<IT>> sections;
         @Nullable
         private IStickyView stickyView;
         @Nullable
@@ -170,14 +173,13 @@ public abstract class MarketManager<IT, NT, CT> implements NavigationItemView.On
         private OnNavigationItemSelectCallback<NT> navigationItemSelectCallback;
         private boolean isAutoNavBarItemScrollEnabled = false;
 
+        public Config(@NonNull List<Section<IT>> sections) {
+            this.sections = sections;
+        }
+
         public Config<IT, NT, CT> setNavigator(@Nullable INavigationBar navigationBar, @Nullable INavigationFactory<NT> navigationFactory) {
             this.navigationBar = navigationBar;
             this.navigationFactory = navigationFactory;
-            return this;
-        }
-
-        public Config<IT, NT, CT> setSections(@NonNull List<Section<IT>> sections) {
-            this.sections = sections;
             return this;
         }
 

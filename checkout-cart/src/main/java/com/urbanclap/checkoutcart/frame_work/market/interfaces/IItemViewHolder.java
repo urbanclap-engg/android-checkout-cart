@@ -1,5 +1,7 @@
 package com.urbanclap.checkoutcart.frame_work.market.interfaces;
 
+import android.support.annotation.NonNull;
+
 /**
  * @author : Adnaan 'Zohran' Ahmed <adnaanahmed@com.urbanclap>
  * @version : 1.0.0
@@ -7,6 +9,10 @@ package com.urbanclap.checkoutcart.frame_work.market.interfaces;
  */
 
 
-public interface IItemViewHolder<T> {
+public interface IItemViewHolder<T, CT> {
     void onBindView(T viewModel);
+
+    boolean increment(@NonNull String uuid, CT item);
+
+    boolean decrement(@NonNull String uuid);
 }
