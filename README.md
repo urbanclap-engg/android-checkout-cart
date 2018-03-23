@@ -1,10 +1,9 @@
 # Checkout Cart
-----
 
 This library will help developers create fully customised checkout cart screen for their own use case.
 
 ## Settings
----
+
 For maven :
 ```xml
 <dependency>
@@ -30,19 +29,19 @@ For Ivy:
 ## Components
 
 ### Section
----
+
 Checkout - cart accepts a list of section. Section itself contains an id for its unique identification, list of items and an optional sticky view. If a sticky view container is passed in the config this view will be rendered in the sticky view container when this section is visible.
 
 `Section(@NonNull String id, @NonNull List<ItemData<T>> itemDataList)`
 
 ### Market Manager
----
+
 Library provides the above basic components and interaction between them is handled by `MarketManager`.
 At this point of time library only supports one variant of market manager : `RecyclerMarketManager` which shows the item list in a recycler view. 
 `MarketManager` receives a set of configs (explained below) and according to which it will create and manage all the components.
 
 ### Config
----
+
 This handles the configuration data for market manager. It receives list of sections in a constructor and has following configurations:
 
 * `setNavigator(@Nullable INavigationBar navigationBar, @Nullable INavigationFactory<NT> navigationFactory)`  - It sets the navigation bar component of the checkout cart. When null is passed that view won't be attached and rendered.
@@ -52,7 +51,7 @@ This handles the configuration data for market manager. It receives list of sect
 * `enableAutoNavBarScroll(boolean enable)` - when enabled auto nav bar automatically focusses on the current visible section.
 
 ### UI/Functional Components
-----
+
 This library accepts list of sections which in turn are the list of items that client wants to show along with config details. Client have to create view holders for the different kinds of views that client want to display and provide them via a factory. 
 
 This library in total has 4 ui/functional components.
@@ -62,7 +61,7 @@ This library in total has 4 ui/functional components.
 * Item List
 
 #### Navigation Bar
-----
+
 This is a component where shortcut to a particular item in the item-list.
 To enable this component client need to do 3 things.
 * Provide a container view which must implement `INavigationBar`.
@@ -77,25 +76,25 @@ For easier usage library provides a default navigation bar container view : `Nav
 Library also provides `OnNavigationItemSelectCallback` interface to give client callbacks when a particular routable item was clicked via a function - `void onItemSelect(@NonNull String routeId, @NonNull List<Routable<T>> routable)`
 
 #### Sticky Section
-----
+
 This is a component where if client wants, client can have a sticky header for a specific section. Here again client can define the container for their sticky section container which must implement `IStickyView`. All those sections which has a sticky view will then have that view displayed in the Sticky section by the library.
 
 For easier usage library provides a default sticky section container view : `StickyFrameLayout` which can be accessed via `MarketUtils` class.
 
 
 #### Cart
----
+
 This components manages functional part of the checkout cart. Client can create their own implementation of the cart by implementing `ICart`.  
 
 For easier usage library provides default cart `DefaultCart` which can be accessed via `MarketUtils` class.
 
 
 #### Item List
----
+
 This is the component where all the sections along with its items are visible. To display this client needs to pass a container view which must implement `IMarketView`. 
 
 ### Generics
----
+
 This entire library is generic. This library needs three models :
 1. view model for the item to be displayed as the list.
 2. view model for the items to be displayed in the navigation bar.
@@ -109,7 +108,7 @@ If any of the model is not needed we can use `Void`.
 
 
 ## Usage
----
+
 
 ### Creating Navigation Bar UI Component
 
@@ -162,7 +161,7 @@ config.setNavigator(MarketUtils.getDefaultHorizontalNavigationBar(this),new Navi
 ```
 
 ### Creating Sticky Section UI Component
----
+
 To create sticky component client need to pass sticky view container to the config. The client can implement its own custom sticky view by implementing `IStickyView` or using the default provided by the library. To set it up just add in to the config:
 ```java
 config.setSticky(MarketUtils.getDefaultStickyView(this))
@@ -182,7 +181,7 @@ section = new Section<>(itr.getUuid(), itemDataList, new IStickyViewItem() {
 ```
 
 ### Creating Cart Functional Component
----
+
 Client can create its own custom cart by implementing the interface `ICart<CT>`. Here `<CT>` is the cart template generic model. Client can also use the default cart provided by the library. In the case if client uses default client then client template model will be of type `CartItem<T>` where cart item encapsulates the cart data model along with fields like quantity and price. Here `<T>` is the data model to be stored inside. To set it up client needs to pass the cart to the config.
 ```java
 config.setCart(new DefaultCart<DefaultCartItem<PokemonItem>>());
@@ -191,7 +190,7 @@ config.setCart(new DefaultCart<DefaultCartItem<PokemonItem>>());
 To increment or decrement the quantity of an item inside the cart, client needs to call `increment(@NonNull String uuid, CT item);` or `decrement(@NonNull String uuid, CT item);` respectively. It returns if the transaction was successful or not.
 
 ### Creating List Item UI Components
----
+
 For list item components first client needs to create view holders for them. Client needs to implement `IItemViewHolder<IT,CT>` in the view holders. Here `<IT>` is the item template view model and `<CT>` is the cart template data model. Then client needs to create factory which the library will use to create these view model. Clients needs to create a factory by implementing `IItemFactory<IT, CT, K extends IItemViewHolder<IT, CT>>`. 
 
 This is the abstract part of the library which client can use to create its own market manager in case `RecyclerMarketManager` doesn't solve their use case. For majority of use case client can use `RecyclerMarketManager`.
