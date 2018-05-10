@@ -47,7 +47,7 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
                                  @NonNull Config<IT, NT, CT> config,
                                  @NonNull RecyclerItemFactory<IT, CT> itemFactory) {
 
-        this(config, MarketUtils.getDefaultRecycler(context), itemFactory);
+        this(config, MarketUtils.getDefaultRecycler(context, false), itemFactory);
     }
 
     public RecyclerMarketManager(@NonNull Config<IT, NT, CT> config,

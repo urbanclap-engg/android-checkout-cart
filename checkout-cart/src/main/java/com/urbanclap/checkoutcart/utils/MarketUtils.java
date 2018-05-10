@@ -20,9 +20,10 @@ public class MarketUtils {
         return new StickyFrameLayout(context);
     }
 
-    public static RecyclerView getDefaultRecycler(@NonNull Context context) {
+    public static RecyclerView getDefaultRecycler(@NonNull Context context,
+                                                  boolean enableNestedScrolling) {
         RecyclerView recyclerView = new RecyclerView(context);
-        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setNestedScrollingEnabled(enableNestedScrolling);
         return recyclerView;
     }
 
