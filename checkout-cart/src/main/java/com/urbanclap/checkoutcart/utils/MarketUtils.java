@@ -21,7 +21,9 @@ public class MarketUtils {
     }
 
     public static RecyclerView getDefaultRecycler(@NonNull Context context) {
-        return new RecyclerView(context);
+        RecyclerView recyclerView = new RecyclerView(context);
+        recyclerView.setNestedScrollingEnabled(false);
+        return recyclerView;
     }
 
     public static INavigationBar getDefaultHorizontalNavigationBar(@NonNull Context context) {
