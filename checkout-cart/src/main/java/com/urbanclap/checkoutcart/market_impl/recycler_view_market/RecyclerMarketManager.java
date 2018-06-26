@@ -42,6 +42,7 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
     private ItemPool<IT> itemPool;
     @NonNull
     private RecyclerViewAdapter<IT, CT> adapter;
+    private static final int DEFAULT_SCROLL_OFFSET = 10;
 
     public RecyclerMarketManager(@NonNull Context context,
                                  @NonNull Config<IT, NT, CT> config,
@@ -113,12 +114,12 @@ public class RecyclerMarketManager<IT, NT, CT> extends MarketManager<IT, NT, CT>
         if (smoothScrollPos != -1) {
             int visiblePosition = ((LinearLayoutManager)layoutManager).findFirstVisibleItemPosition();
             int scrollPos = -1;
-            if(smoothScrollPos - 10 > visiblePosition)
-                scrollPos = smoothScrollPos - 10;
-            else if(smoothScrollPos + 10 < visiblePosition)
-                scrollPos = smoothScrollPos + 10;
+            if (smoothScrollPos - DEFAULT_SCROLL_OFFSET > visiblePosition)
+                scrollPos = smoothScrollPos - DEFAULT_SCROLL_OFFSET;
+            else if (smoothScrollPos + DEFAULT_SCROLL_OFFSET < visiblePosition)
+                scrollPos = smoothScrollPos + DEFAULT_SCROLL_OFFSET;
 
-            if(scrollPos != -1)
+            if (scrollPos != -1)
                 layoutManager.scrollToPosition(scrollPos);
 
             smoothScroller.setTargetPosition(smoothScrollPos);
