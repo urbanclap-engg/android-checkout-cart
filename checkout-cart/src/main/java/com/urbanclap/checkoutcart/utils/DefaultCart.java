@@ -52,6 +52,12 @@ public class DefaultCart<I extends DefaultCartItem> implements ICart<I> {
     }
 
     @Override
+    public void setQuantity(@NonNull String uuid, @NonNull I item) {
+        if (!cartItems.containsKey(uuid))
+            cartItems.put(uuid, item);
+    }
+
+    @Override
     public long getQuantity(@NonNull String uuid) {
         return cartItems.get(uuid).getQuantity();
     }

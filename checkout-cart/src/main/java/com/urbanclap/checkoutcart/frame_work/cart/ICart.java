@@ -24,6 +24,8 @@ public interface ICart<I> {
 
     double getPrice(@NonNull String uuid);
 
+    void setQuantity(@NonNull String uuid, @NonNull I item);
+
     boolean increment(@NonNull String uuid, @NonNull I item);
 
     boolean decrement(@NonNull String uuid);
